@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
+    android:scrollbars="none"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="40dp"
+    >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textSize="13sp"
+        android:text="@string/email_address"
+        />
+
+    <EditText
+        android:id="@+id/edt_email"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/edt_bg"
+        android:layout_marginTop="10dp"
+        android:singleLine="true"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/text_color"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textSize="13sp"
+        android:text="@string/password"
+        android:layout_marginTop="10dp"
+        />
+
+    <EditText
+        android:id="@+id/edt_password"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/edt_bg"
+        android:layout_marginTop="10dp"
+        android:singleLine="true"
+        android:inputType="textPassword"
+        android:textColor="@color/text_color"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:text="@string/forget_password"
+        android:layout_marginTop="15dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        />
+
+    <Button
+        android:id="@+id/btn_signin"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/btn_bg"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:textAllCaps="true"
+        android:text="@string/sign_in"
+        />
+    <LinearLayout
+        android:id="@+id/ll_skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:layoutDirection="ltr"
+
+        >
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/left_arrow"
+            android:padding="3dp"
+            android:clickable="false"
+            android:longClickable="false"
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:textAllCaps="true"
+            android:text="@string/continuing_as_a_guest"
+            android:clickable="false"
+            android:longClickable="false"
+            />
+    </LinearLayout>
+
+</LinearLayout>
+</ScrollView>

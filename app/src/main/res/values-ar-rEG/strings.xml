@@ -1,0 +1,37 @@
+<resources>
+
+    <string name="navigation_drawer_open">فتح</string>
+    <string name="navigation_drawer_close">إغلاق</string>
+    <string name="app_name">جراج</string>
+    <string name="ch_lng">إختر اللغة</string>
+    <string name="ch_country">إختر الدولة</string>
+    <string name="continuee">دخول</string>
+    <string name="sign_up">تسجيل جديد</string>
+    <string name="sign_in">تسجيل دخول</string>
+    <string name="email_address">البريد الالكتروني</string>
+    <string name="password">كلمة المرور</string>
+    <string name="forget_password">نسيت كلمة المرور ؟</string>
+    <string name="continuing_as_a_guest">الاستمرار كضيف</string>
+    <string name="nationality">الجنسية</string>
+    <string name="phone_number">رقم الجوال</string>
+    <string name="document_type_definition">نوع وثيقة التعريف</string>
+    <string name="country_of_personal_proof">بلد إصدار الإثبات الشخصي</string>
+    <string name="done">تم</string>
+    <string name="code">الكود</string>
+    <string name="home">الصفحة الرئيسية</string>
+    <string name="profile">الصفحة الشخصية</string>
+    <string name="reservations">حجوزاتي</string>
+    <string name="contact_us">إتصل بنا</string>
+    <string name="terms_and_conditions">الشروط والاحكام</string>
+    <string name="logout">خروج</string>
+    <string name="cars">سيارات</string>
+    <string name="trucks">شاحنات</string>
+    <string name="rent">إيجار</string>
+    <string name="maintenance">صيانة</string>
+    <string name="tank">دبابات</string>
+    <string name="choose">إختيار</string>
+    <string name="day_sar">ريال/يوم</string>
+    <string name="rating">إرسال تقييم</string>
+    <string name="resv">حجز</string>
+    <string name="notification">الإشعارات</string>
+</resources>

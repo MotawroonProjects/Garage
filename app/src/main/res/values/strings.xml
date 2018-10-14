@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Garage</string>
+    <string name="ch_lng">Choose language</string>
+    <string name="ch_country">Choose country</string>
+    <string name="continuee">Continue</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_in">Sign In</string>
+    <string name="email_address">Email address</string>
+    <string name="password">Password</string>
+    <string name="forget_password">forget password ?</string>
+    <string name="continuing_as_a_guest">Continuing as a guest</string>
+    <string name="nationality">nationality</string>
+    <string name="phone_number">phone number</string>
+    <string name="document_type_definition">Document Type Definition</string>
+    <string name="country_of_personal_proof">Country of personal proof</string>
+    <string name="done">Done</string>
+    <string name="code">code</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="reservations">Reservations</string>
+    <string name="contact_us">Contact us</string>
+    <string name="terms_and_conditions">Terms and conditions</string>
+    <string name="logout">Logout</string>
+    <string name="cars">Cars</string>
+    <string name="trucks">Trucks</string>
+    <string name="rent">Rent</string>
+    <string name="maintenance">Maintenance</string>
+    <string name="tank">Motorcycle</string>
+    <string name="choose">Choose</string>
+    <string name="day_sar">SAR/Day</string>
+    <string name="rating">Rating</string>
+    <string name="resv">Reserve</string>
+    <string name="notification">Notifications</string>
+</resources>
