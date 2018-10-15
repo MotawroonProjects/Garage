@@ -36,7 +36,7 @@ public class Login_Register_Activity extends AppCompatActivity {
 
         }else
         {
-            super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,"en")));
+            super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,"ar")));
 
         }
 

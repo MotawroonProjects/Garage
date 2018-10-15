@@ -24,7 +24,7 @@
         android:layout_gravity="center_horizontal" android:src="@drawable/user_profile"
         />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textAllCaps="true"
@@ -52,7 +52,7 @@
         </Spinner>
     </FrameLayout>
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textAllCaps="true"
@@ -113,7 +113,7 @@
             />
     </LinearLayout>
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textAllCaps="true"
@@ -136,7 +136,7 @@
 
         />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textAllCaps="true"
@@ -161,7 +161,7 @@
 
         />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textAllCaps="true"
@@ -190,7 +190,7 @@
     </FrameLayout>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textAllCaps="true"

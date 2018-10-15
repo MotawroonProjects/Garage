@@ -56,13 +56,13 @@
                         />
                     <TextView
                         android:id="@+id/tv_not"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
+                        android:layout_width="19dp"
+                        android:layout_height="19dp"
                         android:layout_margin="9dp"
                         android:background="@drawable/tv_not_bg"
                         android:textColor="@color/white"
                         android:gravity="center"
-                        android:textSize="12sp"
+                        android:textSize="11sp"
                         android:clickable="false"
                         android:longClickable="false"
                         />

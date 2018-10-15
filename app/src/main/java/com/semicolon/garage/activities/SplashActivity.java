@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.semicolon.garage.R;
 import com.semicolon.garage.languageHelper.Language;
 import com.semicolon.garage.preferences.Preferences;
+import com.semicolon.garage.tags.Tags;
 
 import io.paperdb.Paper;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -31,7 +32,7 @@ public class SplashActivity extends AppCompatActivity {
 
         }else
         {
-            super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,"en")));
+            super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,"ar")));
 
         }
 
@@ -64,10 +65,22 @@ public class SplashActivity extends AppCompatActivity {
                     finish();
                 }else
                     {
-                        Intent intent = new Intent(SplashActivity.this,Login_Register_Activity.class);
-                        startActivity(intent);
-                        finish();
-                        Log.e("lllllllng",lang+"_+_+");
+                        String session = preferences.getSession(SplashActivity.this);
+
+                        if (session.equals(Tags.session_login))
+                        {
+                            Intent intent = new Intent(SplashActivity.this,HomeActivity.class);
+                            startActivity(intent);
+                            finish();
+                            Log.e("lllllllng",lang+"_+_+");
+                        }else
+                            {
+                                Intent intent = new Intent(SplashActivity.this,Login_Register_Activity.class);
+                                startActivity(intent);
+                                finish();
+                                Log.e("lllllllng",lang+"_+_+");
+                            }
+
                     }
 
             }

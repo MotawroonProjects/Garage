@@ -14,7 +14,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class MyApp extends Application {
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(base,"en")));
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(base,"ar")));
     }
 
     @Override
@@ -40,7 +40,7 @@ public class MyApp extends Application {
             }
         }else
             {
-                Paper.book().write("language","en");
+                Paper.book().write("language","ar");
                 CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                         .setDefaultFontPath(Tags.en_font)
                         .setFontAttrId(R.attr.fontPath)

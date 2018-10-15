@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.semicolon.garage.models.Country_Nationality;
 import com.semicolon.garage.models.UserModel;
 import com.semicolon.garage.tags.Tags;
 
@@ -72,5 +73,23 @@ public class Preferences {
         SharedPreferences preferences = context.getSharedPreferences("language",Context.MODE_PRIVATE);
         boolean isSelected = preferences.getBoolean("isSelected",false);
         return isSelected;
+    }
+
+    public void setCountry_NaionalityData(Context context , Country_Nationality country_nationality)
+    {
+        Gson gson = new Gson();
+        String data = gson.toJson(country_nationality);
+        SharedPreferences preferences = context.getSharedPreferences("country_nationality",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("data",data);
+        editor.apply();
+    }
+
+    public Country_Nationality getCountry_Nationality(Context context)
+    {
+        SharedPreferences preferences = context.getSharedPreferences("country_nationality",Context.MODE_PRIVATE);
+        String data = preferences.getString("data","");
+        Gson gson = new Gson();
+        return gson.fromJson(data,Country_Nationality.class);
     }
 }
