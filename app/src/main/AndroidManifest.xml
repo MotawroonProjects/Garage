@@ -31,9 +31,10 @@
             android:name=".activities.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activities.MachineDetailsActivity" />
+        <activity android:name=".activities.VehicleDetailsActivity" />
         <activity android:name=".activities.WebActivity" />
-        <activity android:name=".activities.BankActivity"></activity>
+        <activity android:name=".activities.BankActivity" />
+        <activity android:name=".activities.ReservationActivity"></activity>
     </application>
 
 </manifest>

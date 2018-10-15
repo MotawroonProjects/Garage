@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,11 +24,12 @@ import android.widget.Toast;
 import com.semicolon.garage.R;
 import com.semicolon.garage.activities.BankActivity;
 import com.semicolon.garage.activities.WebActivity;
-import com.semicolon.garage.models.BankAccountModel;
 import com.semicolon.garage.models.ResponsModel;
 import com.semicolon.garage.models.SocialContactModel;
+import com.semicolon.garage.models.UserModel;
 import com.semicolon.garage.remote.Api;
 import com.semicolon.garage.share.Common;
+import com.semicolon.garage.singletone.UserSingleTone;
 
 import java.util.List;
 
@@ -44,6 +44,8 @@ public class Fragment_Contactus extends Fragment{
     private ProgressDialog progressDialog,contact_progressDialog;
     private Button sendBtn;
     private SocialContactModel socialContactModel;
+    private UserSingleTone userSingleTone;
+    private UserModel userModel;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,6 +61,8 @@ public class Fragment_Contactus extends Fragment{
     }
 
     private void initView(View view) {
+        userSingleTone = UserSingleTone.getInstance();
+        userModel = userSingleTone.getUserModel();
         progressDialog = Common.createProgressDialog(getActivity(),getString(R.string.wait));
         contact_progressDialog = Common.createProgressDialog(getActivity(),getString(R.string.sending));
 
@@ -146,6 +150,10 @@ public class Fragment_Contactus extends Fragment{
             }
         });
 
+        if (userModel!=null)
+        {
+            edt_email.setText(userModel.getUser_email());
+        }
         getContacts();
     }
     private void getContacts() {

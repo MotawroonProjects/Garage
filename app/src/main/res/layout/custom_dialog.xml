@@ -5,18 +5,18 @@
     android:layout_height="wrap_content"
     android:background="@drawable/gps_bg"
     >
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:textStyle="bold"
-        android:textSize="15sp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
         android:gravity="center"
-        android:text="GPS"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:text="@string/notification"
         android:textColor="@color/white"
-        />
+        android:textSize="15sp"
+        android:textStyle="bold" />
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
@@ -35,7 +35,7 @@
         android:paddingRight="5dp"
         android:textSize="14sp"
         android:textColor="@color/white"
-        android:text="@string/gps_open"
+        android:text="@string/si_su"
         android:layout_marginBottom="10dp"
         android:gravity="center"
         />
@@ -47,21 +47,14 @@
 
         >
         <Button
-            android:id="@+id/openBtn"
+            android:id="@+id/doneBtn"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:background="#00000000"
             android:text="@string/accept"
             android:textColor="@color/press_color"
             />
-        <Button
-            android:id="@+id/cancelBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:background="#00000000"
-            android:text="@string/cancel"
-            android:textColor="@color/press_color"
-            />
+
     </LinearLayout>
 
 </LinearLayout>

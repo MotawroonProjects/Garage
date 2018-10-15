@@ -39,7 +39,7 @@
     <string name="ch_count">اختر الدوله من فضلك</string>
     <string name="load_country">جار تحميل الدول...</string>
     <string name="load_nat">جار تحميل الجنسيات...</string>
-    <string name="accept">موافق</string>
+    <string name="accept">حسنا</string>
     <string name="cancel">إلغاء</string>
     <string name="gps_open">سيقوم التطبيق بتشغيل GPS لتحديد موقعك.</string>
     <string name="name">الإسم</string>
@@ -66,4 +66,10 @@
     <string name="account_IBAN">الايبان</string>
     <string name="account_bank_name">البنك</string>
     <string name="account_number">رقم الحساب</string>
+    <string name="no_car">لا توجد سيارات لعرضها</string>
+    <string name="no_motorcycles_to_display">لا توجد دبابات لعرضها</string>
+    <string name="no_trucks_to_display">لا توجد شاحنات لعرضها</string>
+    <string name="size">حجم</string>
+    <string name="si_su">قم بتسجيل الدخول او إنشاء حساب جديد.</string>
+    <string name="res">حجز</string>
 </resources>

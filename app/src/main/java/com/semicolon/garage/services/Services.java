@@ -2,6 +2,7 @@ package com.semicolon.garage.services;
 
 import com.semicolon.garage.models.BankAccountModel;
 import com.semicolon.garage.models.Country_Nationality;
+import com.semicolon.garage.models.VehicleModel;
 import com.semicolon.garage.models.ResponsModel;
 import com.semicolon.garage.models.SocialContactModel;
 import com.semicolon.garage.models.Terms_Conditions;
@@ -44,5 +45,11 @@ public interface Services {
     Call<ResponsModel> sendProblemViaContact(@Field("name") String name,
                                              @Field("email") String email,
                                              @Field("subject") String subject,
-                                             @Field("message") String messag);
+                                             @Field("message") String message);
+
+    @GET("Api/Cars/{user_id}/{id_country}/{type}")
+    Call<List<VehicleModel>> getVehicleData(@Path("user_id") String user_id,
+                                            @Path("id_country") String id_country,
+                                            @Path("type") String type
+                                            );
 }

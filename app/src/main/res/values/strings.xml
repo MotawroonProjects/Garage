@@ -42,10 +42,10 @@
     <string name="accept">accept</string>
     <string name="cancel">cancel</string>
     <string name="gps_open">The application will turns on GPS to determine your location</string>
-    <string name="name">name</string>
-    <string name="email">email</string>
-    <string name="subject">subject</string>
-    <string name="message">message</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="subject">Subject</string>
+    <string name="message">Message</string>
     <string name="send">Send</string>
     <string name="bank_accounts">Bank accounts</string>
     <string name="whatsapp">whatsapp</string>
@@ -66,4 +66,10 @@
     <string name="account_IBAN">Account IBAN</string>
     <string name="account_bank_name">Account Bank Name</string>
     <string name="account_number">Account Number</string>
+    <string name="no_car">No Cars to display</string>
+    <string name="no_motorcycles_to_display">No Motorcycles to display</string>
+    <string name="no_trucks_to_display">No Trucks to display</string>
+    <string name="size">Size</string>
+    <string name="si_su">Sign in or create a new account.</string>
+    <string name="res">Reservation</string>
 </resources>

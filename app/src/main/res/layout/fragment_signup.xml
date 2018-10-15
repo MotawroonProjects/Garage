@@ -58,6 +58,29 @@
         android:textAllCaps="true"
         android:textStyle="bold"
         android:textSize="13sp"
+        android:text="@string/name"
+        />
+
+    <EditText
+        android:id="@+id/edt_name"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/edt_bg"
+        android:layout_marginTop="10dp"
+        android:singleLine="true"
+        android:inputType="textPersonName"
+        android:textColor="@color/text_color"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textSize="13sp"
         android:text="@string/phone_number"
         />
     <com.lamudi.phonefield.PhoneInputLayout

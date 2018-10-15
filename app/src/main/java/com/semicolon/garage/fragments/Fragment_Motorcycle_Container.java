@@ -38,7 +38,7 @@ public class Fragment_Motorcycle_Container extends Fragment{
         tab.setupWithViewPager(pager);
         adapter = new MyPagerAdapter(getActivity().getSupportFragmentManager());
 
-        adapter.AddFragment(Fragment_Rent_Tank.getInstance());
+        adapter.AddFragment(Fragment_Rent_Motorcycle.getInstance());
         adapter.AddFragment(Fragment_Maintenance_Motorcycle.getInstance());
 
         adapter.AddTitle(getString(R.string.rent));

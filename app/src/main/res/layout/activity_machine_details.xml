@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:context=".activities.MachineDetailsActivity"
+        tools:context=".activities.VehicleDetailsActivity"
     >
 
         <ImageView
@@ -38,6 +38,8 @@
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/nav_right"
                 android:padding="16dp"
+                android:visibility="invisible"
+
                 />
             <android.support.v4.view.ViewPager
                 android:id="@+id/pager"
@@ -55,6 +57,7 @@
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/nav_left"
                 android:padding="16dp"
+                android:visibility="invisible"
 
                 />
         </LinearLayout>
@@ -98,6 +101,7 @@
                     android:textSize="17sp"
                     android:text="هيونداي"
                     android:textStyle="bold"
+                    android:gravity="center"
                     android:layout_marginTop="5dp"
                     />
             </LinearLayout>
@@ -135,10 +139,13 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="110dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="7dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_gravity="center_horizontal"
             >
 
         </android.support.v7.widget.RecyclerView>
@@ -152,6 +159,7 @@
             android:text="@string/resv"
             android:background="@drawable/btn_bg"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
 
             />
     </LinearLayout>

@@ -33,7 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Fragment_Rent_Truck extends Fragment{
+public class Fragment_Rent_Motorcycle extends Fragment{
 
     private ProgressBar progBar;
     private RecyclerView recView;
@@ -50,14 +50,14 @@ public class Fragment_Rent_Truck extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_rent_truck,container,false);
+        View view = inflater.inflate(R.layout.fragment_rent_tank,container,false);
         initView(view);
         return view;
     }
 
-    public static Fragment_Rent_Truck getInstance()
+    public static Fragment_Rent_Motorcycle getInstance()
     {
-        return new Fragment_Rent_Truck();
+        return new Fragment_Rent_Motorcycle();
     }
 
     private void initView(View view) {
@@ -72,17 +72,17 @@ public class Fragment_Rent_Truck extends Fragment{
         recView = view.findViewById(R.id.recView);
         manager = new LinearLayoutManager(getActivity());
         recView.setLayoutManager(manager);
-
         adapter = new RentAdapter(getActivity(),vehicleModelList,this);
         recView.setAdapter(adapter);
         if (userModel==null)
         {
-            getData("all",country_id, Tags.type_trucks);
+            getData("all",country_id, Tags.type_motorcycles);
         }else
         {
-            getData(userModel.getUser_id(),country_id, Tags.type_trucks);
+            getData(userModel.getUser_id(),country_id, Tags.type_motorcycles);
 
         }
+
     }
 
     private void getData(String user_id, String country_id, String type) {
