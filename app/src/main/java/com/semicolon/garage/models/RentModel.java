@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
-public class VehicleModel implements Serializable {
+public class RentModel implements Serializable {
     private String id_car_maintenance;
     private String title;
     private String car_trademarks;

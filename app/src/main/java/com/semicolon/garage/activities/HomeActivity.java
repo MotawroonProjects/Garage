@@ -103,7 +103,7 @@ public class HomeActivity extends AppCompatActivity
         {
             super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,"ar")));
             CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                    .setDefaultFontPath(Tags.en_font)
+                    .setDefaultFontPath(Tags.ar_font)
                     .setFontAttrId(R.attr.fontPath)
                     .build());
         }

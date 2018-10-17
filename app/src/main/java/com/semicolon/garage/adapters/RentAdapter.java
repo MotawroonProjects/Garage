@@ -15,7 +15,7 @@ import com.semicolon.garage.R;
 import com.semicolon.garage.fragments.Fragment_Rent_Car;
 import com.semicolon.garage.fragments.Fragment_Rent_Motorcycle;
 import com.semicolon.garage.fragments.Fragment_Rent_Truck;
-import com.semicolon.garage.models.VehicleModel;
+import com.semicolon.garage.models.RentModel;
 import com.semicolon.garage.tags.Tags;
 import com.squareup.picasso.Picasso;
 
@@ -23,11 +23,11 @@ import java.util.List;
 
 public class RentAdapter  extends RecyclerView.Adapter<RentAdapter.Holder>{
     private Context context;
-    private List<VehicleModel> vehicleModelList;
+    private List<RentModel> rentModelList;
     private Fragment fragment;
-    public RentAdapter(Context context, List<VehicleModel> vehicleModelList, Fragment fragment) {
+    public RentAdapter(Context context, List<RentModel> rentModelList, Fragment fragment) {
         this.context = context;
-        this.vehicleModelList = vehicleModelList;
+        this.rentModelList = rentModelList;
         this.fragment = fragment;
     }
 
@@ -39,28 +39,28 @@ public class RentAdapter  extends RecyclerView.Adapter<RentAdapter.Holder>{
 
     @Override
     public void onBindViewHolder(final RentAdapter.Holder holder, int position) {
-        VehicleModel vehicleModel = vehicleModelList.get(position);
-        holder.BindData(vehicleModel);
+        RentModel rentModel = rentModelList.get(position);
+        holder.BindData(rentModel);
         holder.btn_choose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                VehicleModel vehicleModel = vehicleModelList.get(holder.getAdapterPosition());
+                RentModel rentModel = rentModelList.get(holder.getAdapterPosition());
 
                 if (fragment instanceof Fragment_Rent_Car)
                 {
 
                     Fragment_Rent_Car fragment_rent_car = (Fragment_Rent_Car) fragment;
-                    fragment_rent_car.setItem(vehicleModel);
+                    fragment_rent_car.setItem(rentModel);
 
                 }else if (fragment instanceof Fragment_Rent_Truck)
                 {
                     Fragment_Rent_Truck fragment_rent_truck = (Fragment_Rent_Truck) fragment;
-                    fragment_rent_truck.setItem(vehicleModel);
+                    fragment_rent_truck.setItem(rentModel);
                 }else if (fragment instanceof Fragment_Rent_Motorcycle)
                 {
                     Fragment_Rent_Motorcycle fragment_rent_motorcycle = (Fragment_Rent_Motorcycle) fragment;
-                    fragment_rent_motorcycle.setItem(vehicleModel);
+                    fragment_rent_motorcycle.setItem(rentModel);
                 }
             }
         });
@@ -70,7 +70,7 @@ public class RentAdapter  extends RecyclerView.Adapter<RentAdapter.Holder>{
 
     @Override
     public int getItemCount() {
-        return vehicleModelList.size();
+        return rentModelList.size();
     }
 
     class Holder extends RecyclerView.ViewHolder  {
@@ -91,18 +91,18 @@ public class RentAdapter  extends RecyclerView.Adapter<RentAdapter.Holder>{
 
         }
 
-        public void BindData(VehicleModel vehicleModel)
+        public void BindData(RentModel rentModel)
         {
-            Picasso.with(context).load(Uri.parse(Tags.IMAGE_URL+vehicleModel.getMain_photo())).into(image);
-            tv_model.setText(vehicleModel.getCar_trademarks());
-            tv_name.setText(vehicleModel.getTitle());
-            tv_price.setText(vehicleModel.getCost());
-            if (vehicleModel.getCategory_id_fk().equals("1"))
+            Picasso.with(context).load(Uri.parse(Tags.IMAGE_URL+ rentModel.getMain_photo())).into(image);
+            tv_model.setText(rentModel.getCar_trademarks());
+            tv_name.setText(rentModel.getTitle());
+            tv_price.setText(rentModel.getCost());
+            if (rentModel.getCategory_id_fk().equals("1"))
             {
-                tv_year_size.setText(vehicleModel.getCar_model());
+                tv_year_size.setText(rentModel.getCar_model());
             }else
                 {
-                    tv_year_size.setText(vehicleModel.getSize()+" "+context.getString(R.string.size));
+                    tv_year_size.setText(rentModel.getSize()+" "+context.getString(R.string.size));
 
                 }
 

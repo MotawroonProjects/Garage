@@ -1,53 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".activities.ReservationActivity">
+    tools:context=".activities.ReservationActivity"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/reser"
+    android:scrollbars="none"
+    >
 
-    <android.support.design.widget.AppBarLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        android:orientation="vertical"
+        >
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:contentInsetEnd="0dp"
-            app:contentInsetRight="0dp"
-            app:contentInsetLeft="0dp"
-            app:contentInsetStart="0dp"
-            >
-            <RelativeLayout
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:contentInsetEnd="0dp"
+                app:contentInsetRight="0dp"
+                app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp"
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
+                        android:singleLine="true"
+                        android:text="@string/res"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+                    <ImageView
+                        android:id="@+id/image_back"
+                        android:layout_width="56dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/black_back_arrow"
+                        android:padding="18dp"
+
+                        />
+                </RelativeLayout>
+
+            </android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.AppBarLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                android:gravity="center"
+                android:layout_marginTop="65dp"
+                >
                 <TextView
-                    android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textColor="@color/white"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:singleLine="true"
-                    android:layout_centerInParent="true"
-                    android:text="@string/res"
+                    android:text="@string/book_loc"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"
                     />
-                <ImageView
-                    android:id="@+id/image_back"
-                    android:layout_width="56dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/white_back_arrow"
-                    android:padding="18dp"
+
+                <TextView
+                    android:id="@+id/tv_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="33dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/edt_bg"
+                    android:drawableStart="@drawable/map_icon"
+                    tools:ignore="RtlCompat"
+                    android:paddingRight="5dp"
+                    android:paddingLeft="5dp"
+                    android:drawablePadding="5dp"
                     />
-            </RelativeLayout>
 
-        </android.support.v7.widget.Toolbar>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1"
+                    >
+                    <LinearLayout
+                        android:id="@+id/ll_from_date"
+                        android:layout_width="0dp"
+                        android:layout_weight=".5"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="3dp"
+                        tools:ignore="RtlCompat"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textSize="17sp"
+                            android:text="@string/f_date"
+                            android:textStyle="bold"
+                            android:clickable="false"
+                            android:longClickable="false"
+                            android:textAllCaps="true"
+                            />
+                        <TextView
+                            android:id="@+id/tv_from_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="33dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/edt_bg"
+                            android:clickable="false"
+                            android:longClickable="false"
+                            android:gravity="center"
 
-    </android.support.design.widget.AppBarLayout>
-</LinearLayout>
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/ll_to_date"
+                        android:layout_width="0dp"
+                        android:layout_weight=".5"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginStart="2dp"
+                        tools:ignore="RtlCompat"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textSize="17sp"
+                            android:text="@string/t_date"
+                            android:textStyle="bold"
+                            android:clickable="false"
+                            android:longClickable="false"
+                            android:textAllCaps="true"
+
+                            />
+                        <TextView
+                            android:id="@+id/tv_to_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="33dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/edt_bg"
+                            android:clickable="false"
+                            android:longClickable="false"
+                            android:gravity="center"
+                            />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <Button
+                    android:id="@+id/searchBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/btn_bg"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textAllCaps="true"
+                    android:text="@string/search"
+                    android:letterSpacing=".1"
+
+                    />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</ScrollView>

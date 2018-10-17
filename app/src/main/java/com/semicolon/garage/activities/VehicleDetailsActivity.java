@@ -25,7 +25,7 @@ import com.semicolon.garage.adapters.MyPagerAdapterImages;
 import com.semicolon.garage.fragments.Fragment_Images;
 import com.semicolon.garage.languageHelper.Language;
 import com.semicolon.garage.models.UserModel;
-import com.semicolon.garage.models.VehicleModel;
+import com.semicolon.garage.models.RentModel;
 import com.semicolon.garage.singletone.UserSingleTone;
 import com.semicolon.garage.tags.Tags;
 
@@ -46,8 +46,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     private RecyclerView recView;
     private RecyclerView.LayoutManager manager;
     private RecyclerView.Adapter adapter;
-    private List<VehicleModel.GalleryInside> galleryInsideList;
-    private VehicleModel vehicleModel;
+    private List<RentModel.GalleryInside> galleryInsideList;
+    private RentModel rentModel;
     private UserSingleTone userSingleTone;
     private UserModel userModel;
     private String lang;
@@ -80,7 +80,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         {
             super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,"ar")));
             CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                    .setDefaultFontPath(Tags.en_font)
+                    .setDefaultFontPath(Tags.ar_font)
                     .setFontAttrId(R.attr.fontPath)
                     .build());
         }
@@ -123,14 +123,10 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         {
             if (lang.equals("ar"))
             {
-                image_back.setRotation(180);
-
+                Language.setLocality(this,"ar");
+                image_back.setRotation(180f);
             }
-        }else
-            {
-                image_back.setRotation(180);
-
-            }
+        }
 
         image_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,13 +137,16 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         btn_reserve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (userModel==null)
+                Intent intent = new Intent(VehicleDetailsActivity.this,ReservationActivity.class);
+                intent.putExtra("data", rentModel);
+                startActivity(intent);
+               /* if (userModel==null)
                 {
                     CreateAlertDialog();
                 }else
                     {
 
-                    }
+                    }*/
             }
         });
 
@@ -187,37 +186,37 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent!=null)
         {
-            vehicleModel = (VehicleModel) intent.getSerializableExtra("data");
-            UpdateUi(vehicleModel);
+            rentModel = (RentModel) intent.getSerializableExtra("data");
+            UpdateUi(rentModel);
         }
     }
 
-    private void UpdateUi(final VehicleModel vehicleModel)
+    private void UpdateUi(final RentModel rentModel)
     {
-        tv_price.setText(vehicleModel.getCost());
-        if (vehicleModel.getCategory_id_fk().equals(Tags.type_cars))
+        tv_price.setText(rentModel.getCost());
+        if (rentModel.getCategory_id_fk().equals(Tags.type_rent_cars))
         {
-            tv_details.setText(vehicleModel.getCar_trademarks()+"\n"+vehicleModel.getTitle()+"\n"+vehicleModel.getCar_model());
+            tv_details.setText(rentModel.getCar_trademarks()+"\n"+ rentModel.getTitle()+"\n"+ rentModel.getCar_model());
 
         }
 
         else
             {
-                tv_details.setText(vehicleModel.getCar_trademarks()+"\n"+vehicleModel.getTitle()+"\n"+vehicleModel.getSize()+" "+getString(R.string.size));
+                tv_details.setText(rentModel.getCar_trademarks()+"\n"+ rentModel.getTitle()+"\n"+ rentModel.getSize()+" "+getString(R.string.size));
 
             }
 
 
 
 
-            Log.e("size",vehicleModel.getGallary_color().size()+"");
-            if (vehicleModel.getGallary_color().size()>0)
+            Log.e("size", rentModel.getGallary_color().size()+"");
+            if (rentModel.getGallary_color().size()>0)
             {
-                if (vehicleModel.getGallary_color().size()==1)
+                if (rentModel.getGallary_color().size()==1)
                 {
                     myPagerAdapter = new MyPagerAdapterImages(getSupportFragmentManager());
 
-                    for (VehicleModel.GalleryColor galleryColor:vehicleModel.getGallary_color())
+                    for (RentModel.GalleryColor galleryColor: rentModel.getGallary_color())
                     {
                         myPagerAdapter.AddFragment(Fragment_Images.getInstance(galleryColor.getPhoto_name()));
                     }
@@ -226,11 +225,11 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                     image_left.setVisibility(View.INVISIBLE);
                     image_right.setVisibility(View.INVISIBLE);
 
-                }else if (vehicleModel.getGallary_color().size()>1)
+                }else if (rentModel.getGallary_color().size()>1)
                 {
                     myPagerAdapter = new MyPagerAdapterImages(getSupportFragmentManager());
 
-                    for (VehicleModel.GalleryColor galleryColor:vehicleModel.getGallary_color())
+                    for (RentModel.GalleryColor galleryColor: rentModel.getGallary_color())
                     {
                         myPagerAdapter.AddFragment(Fragment_Images.getInstance(galleryColor.getPhoto_name()));
                     }
@@ -253,7 +252,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         pager.setCurrentItem(pager.getCurrentItem()+1);
                         image_left.setVisibility(View.VISIBLE);
-                        if (pager.getCurrentItem()==vehicleModel.getGallary_color().size()-1)
+                        if (pager.getCurrentItem()== rentModel.getGallary_color().size()-1)
                         {
                             image_right.setVisibility(View.INVISIBLE);
                         }
@@ -274,7 +273,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
 
 
-        galleryInsideList.addAll(vehicleModel.getGallary_inside());
+        galleryInsideList.addAll(rentModel.getGallary_inside());
         adapter.notifyDataSetChanged();
 
     }

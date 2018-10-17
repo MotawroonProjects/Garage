@@ -78,7 +78,7 @@ public class SplashActivity extends AppCompatActivity {
                                 Intent intent = new Intent(SplashActivity.this,Login_Register_Activity.class);
                                 startActivity(intent);
                                 finish();
-                                Log.e("lllllllng",lang+"_+_+");
+                                Log.e("lllllllng",Paper.book().read("language")+"_+_+");
                             }
 
                     }

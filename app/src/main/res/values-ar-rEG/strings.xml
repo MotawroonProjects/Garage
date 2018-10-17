@@ -72,4 +72,9 @@
     <string name="size">حجم</string>
     <string name="si_su">قم بتسجيل الدخول او إنشاء حساب جديد.</string>
     <string name="res">حجز</string>
+    <string name="search">بحث</string>
+    <string name="book_loc">موقع حجز السيارة</string>
+    <string name="f_date">من تاريخ</string>
+    <string name="t_date">الى تاريخ</string>
+    <string name="view_location">الموقع</string>
 </resources>

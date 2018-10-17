@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.github.siyamed.shapeimageview.RoundedImageView;
 import com.semicolon.garage.R;
-import com.semicolon.garage.models.VehicleModel;
+import com.semicolon.garage.models.RentModel;
 import com.semicolon.garage.tags.Tags;
 import com.squareup.picasso.Picasso;
 
@@ -21,9 +21,9 @@ import java.util.List;
 
 public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Holder>{
     private Context context;
-    List<VehicleModel.GalleryInside> galleryInsideList;
+    List<RentModel.GalleryInside> galleryInsideList;
 
-    public ImagesAdapter(Context context, List<VehicleModel.GalleryInside> galleryInsideList) {
+    public ImagesAdapter(Context context, List<RentModel.GalleryInside> galleryInsideList) {
         this.context = context;
         this.galleryInsideList = galleryInsideList;
     }
@@ -38,7 +38,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Holder>{
     @Override
     public void onBindViewHolder(Holder holder, int position) {
 
-        VehicleModel.GalleryInside galleryInside = galleryInsideList.get(position);
+        RentModel.GalleryInside galleryInside = galleryInsideList.get(position);
         holder.BindData(galleryInside);
 
     }
@@ -57,7 +57,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.Holder>{
 
         }
 
-        public void BindData(VehicleModel.GalleryInside galleryInside)
+        public void BindData(RentModel.GalleryInside galleryInside)
         {
             Picasso.with(context).load(Uri.parse(Tags.IMAGE_URL+galleryInside.getPhoto_name())).into(image);
         }

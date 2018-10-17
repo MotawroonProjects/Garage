@@ -17,4 +17,15 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         />
+    <TextView
+        android:id="@+id/tv_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        android:text="@string/no_trucks_to_display"
+        android:textAllCaps="true"
+        android:visibility="gone"
+        />
 </FrameLayout>

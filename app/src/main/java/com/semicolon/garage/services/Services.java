@@ -2,7 +2,8 @@ package com.semicolon.garage.services;
 
 import com.semicolon.garage.models.BankAccountModel;
 import com.semicolon.garage.models.Country_Nationality;
-import com.semicolon.garage.models.VehicleModel;
+import com.semicolon.garage.models.MaintenanceModel;
+import com.semicolon.garage.models.RentModel;
 import com.semicolon.garage.models.ResponsModel;
 import com.semicolon.garage.models.SocialContactModel;
 import com.semicolon.garage.models.Terms_Conditions;
@@ -48,8 +49,14 @@ public interface Services {
                                              @Field("message") String message);
 
     @GET("Api/Cars/{user_id}/{id_country}/{type}")
-    Call<List<VehicleModel>> getVehicleData(@Path("user_id") String user_id,
-                                            @Path("id_country") String id_country,
-                                            @Path("type") String type
+    Call<List<RentModel>> getVehicleData(@Path("user_id") String user_id,
+                                         @Path("id_country") String id_country,
+                                         @Path("type") String type
                                             );
+
+    @GET("Api/Maintenance/{user_id}/{id_country}/{type}")
+    Call<List<MaintenanceModel>> getMaintenance(@Path("user_id") String user_id,
+                                                @Path("id_country") String id_country,
+                                                @Path("type") String type
+                                                );
 }

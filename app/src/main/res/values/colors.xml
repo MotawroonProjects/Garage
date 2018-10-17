@@ -16,6 +16,8 @@
     <color name="rate_color">#ff7e14</color>
     <color name="gray0">#eeeeee</color>
     <color name="gray1">#e0e0e0</color>
+    <color name="gray3">#f5f5f5</color>
+
 
 
 </resources>

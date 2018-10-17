@@ -72,4 +72,9 @@
     <string name="size">Size</string>
     <string name="si_su">Sign in or create a new account.</string>
     <string name="res">Reservation</string>
+    <string name="search">Search</string>
+    <string name="book_loc">Booking Location</string>
+    <string name="f_date">From Date</string>
+    <string name="t_date">To Date</string>
+    <string name="view_location">Location</string>
 </resources>

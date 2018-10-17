@@ -14,10 +14,12 @@ import com.semicolon.garage.fragments.Fragment_SignIn;
 import com.semicolon.garage.fragments.Fragment_SignUp;
 import com.semicolon.garage.languageHelper.Language;
 import com.semicolon.garage.preferences.Preferences;
+import com.semicolon.garage.tags.Tags;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
 import io.paperdb.Paper;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class Login_Register_Activity extends AppCompatActivity {
@@ -30,14 +32,32 @@ public class Login_Register_Activity extends AppCompatActivity {
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
         lang = Paper.book().read("language");
+
         if (lang!=null)
         {
             super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,lang)));
+            if (lang.equals("ar"))
+            {
+                CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                        .setDefaultFontPath(Tags.ar_font)
+                        .setFontAttrId(R.attr.fontPath)
+                        .build());
+
+            }else if (lang.equals("en"))
+            {
+                CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                        .setDefaultFontPath(Tags.en_font)
+                        .setFontAttrId(R.attr.fontPath)
+                        .build());
+            }
 
         }else
         {
             super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,"ar")));
-
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.ar_font)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
         }
 
     }

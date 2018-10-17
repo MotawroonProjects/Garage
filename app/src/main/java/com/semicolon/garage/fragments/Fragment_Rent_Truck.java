@@ -20,7 +20,7 @@ import com.semicolon.garage.R;
 import com.semicolon.garage.activities.VehicleDetailsActivity;
 import com.semicolon.garage.adapters.RentAdapter;
 import com.semicolon.garage.models.UserModel;
-import com.semicolon.garage.models.VehicleModel;
+import com.semicolon.garage.models.RentModel;
 import com.semicolon.garage.preferences.Preferences;
 import com.semicolon.garage.remote.Api;
 import com.semicolon.garage.singletone.UserSingleTone;
@@ -39,7 +39,7 @@ public class Fragment_Rent_Truck extends Fragment{
     private RecyclerView recView;
     private RecyclerView.LayoutManager manager;
     private RecyclerView.Adapter adapter;
-    private List<VehicleModel> vehicleModelList;
+    private List<RentModel> rentModelList;
     private TextView tv_no;
     private Preferences preferences;
     private String country_id;
@@ -61,7 +61,7 @@ public class Fragment_Rent_Truck extends Fragment{
     }
 
     private void initView(View view) {
-        vehicleModelList = new ArrayList<>();
+        rentModelList = new ArrayList<>();
         preferences = Preferences.getInstance();
         userSingleTone = UserSingleTone.getInstance();
         userModel = userSingleTone.getUserModel();
@@ -73,14 +73,14 @@ public class Fragment_Rent_Truck extends Fragment{
         manager = new LinearLayoutManager(getActivity());
         recView.setLayoutManager(manager);
 
-        adapter = new RentAdapter(getActivity(),vehicleModelList,this);
+        adapter = new RentAdapter(getActivity(), rentModelList,this);
         recView.setAdapter(adapter);
         if (userModel==null)
         {
-            getData("all",country_id, Tags.type_trucks);
+            getData("all",country_id, Tags.type_rent_trucks);
         }else
         {
-            getData(userModel.getUser_id(),country_id, Tags.type_trucks);
+            getData(userModel.getUser_id(),country_id, Tags.type_rent_trucks);
 
         }
     }
@@ -92,16 +92,16 @@ public class Fragment_Rent_Truck extends Fragment{
 
         Api.getService()
                 .getVehicleData(user_id,country_id,type)
-                .enqueue(new Callback<List<VehicleModel>>() {
+                .enqueue(new Callback<List<RentModel>>() {
                     @Override
-                    public void onResponse(Call<List<VehicleModel>> call, Response<List<VehicleModel>> response) {
+                    public void onResponse(Call<List<RentModel>> call, Response<List<RentModel>> response) {
                         if (response.isSuccessful())
                         {
                             progBar.setVisibility(View.GONE);
                             if (response.body().size()>0)
                             {
                                 tv_no.setVisibility(View.GONE);
-                                vehicleModelList.addAll(response.body());
+                                rentModelList.addAll(response.body());
                                 adapter.notifyDataSetChanged();
                             }else
                             {
@@ -111,17 +111,17 @@ public class Fragment_Rent_Truck extends Fragment{
                     }
 
                     @Override
-                    public void onFailure(Call<List<VehicleModel>> call, Throwable t) {
+                    public void onFailure(Call<List<RentModel>> call, Throwable t) {
                         Log.e("Error",t.getMessage());
                         progBar.setVisibility(View.GONE);
                     }
                 });
     }
 
-    public void setItem(VehicleModel vehicleModel)
+    public void setItem(RentModel rentModel)
     {
         Intent intent = new Intent(getActivity(), VehicleDetailsActivity.class);
-        intent.putExtra("data",vehicleModel);
+        intent.putExtra("data", rentModel);
         startActivity(intent);
     }
 

@@ -20,7 +20,7 @@ import com.semicolon.garage.R;
 import com.semicolon.garage.activities.VehicleDetailsActivity;
 import com.semicolon.garage.adapters.RentAdapter;
 import com.semicolon.garage.models.UserModel;
-import com.semicolon.garage.models.VehicleModel;
+import com.semicolon.garage.models.RentModel;
 import com.semicolon.garage.preferences.Preferences;
 import com.semicolon.garage.remote.Api;
 import com.semicolon.garage.singletone.UserSingleTone;
@@ -38,7 +38,7 @@ public class Fragment_Rent_Car extends Fragment{
     private RecyclerView recView;
     private RecyclerView.LayoutManager manager;
     private RecyclerView.Adapter adapter;
-    private List<VehicleModel> vehicleModelList;
+    private List<RentModel> rentModelList;
     private TextView tv_no;
     private Preferences preferences;
     private String country_id;
@@ -63,22 +63,22 @@ public class Fragment_Rent_Car extends Fragment{
         userSingleTone = UserSingleTone.getInstance();
         userModel = userSingleTone.getUserModel();
         country_id = preferences.getCountry_Nationality(getActivity()).getId_country();
-        vehicleModelList = new ArrayList<>();
+        rentModelList = new ArrayList<>();
         progBar = view.findViewById(R.id.progBar);
         tv_no = view.findViewById(R.id.tv_no);
         progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getActivity(),R.color.press_color), PorterDuff.Mode.SRC_IN);
         recView = view.findViewById(R.id.recView);
         manager = new LinearLayoutManager(getActivity());
         recView.setLayoutManager(manager);
-        adapter = new RentAdapter(getActivity(),vehicleModelList,this);
+        adapter = new RentAdapter(getActivity(), rentModelList,this);
         recView.setAdapter(adapter);
 
         if (userModel==null)
         {
-            getData("all",country_id, Tags.type_cars);
+            getData("all",country_id, Tags.type_rent_cars);
         }else
             {
-                getData(userModel.getUser_id(),country_id, Tags.type_cars);
+                getData(userModel.getUser_id(),country_id, Tags.type_rent_cars);
 
             }
 
@@ -91,9 +91,9 @@ public class Fragment_Rent_Car extends Fragment{
 
         Api.getService()
                 .getVehicleData(user_id,country_id,type)
-                .enqueue(new Callback<List<VehicleModel>>() {
+                .enqueue(new Callback<List<RentModel>>() {
                     @Override
-                    public void onResponse(Call<List<VehicleModel>> call, Response<List<VehicleModel>> response) {
+                    public void onResponse(Call<List<RentModel>> call, Response<List<RentModel>> response) {
                         if (response.isSuccessful())
                         {
                             Log.e("dsfsdfsd","dfsdfsd");
@@ -103,7 +103,7 @@ public class Fragment_Rent_Car extends Fragment{
                                 Log.e("dsfsdfsd2","dfsdfsd");
 
                                 tv_no.setVisibility(View.GONE);
-                                vehicleModelList.addAll(response.body());
+                                rentModelList.addAll(response.body());
                                 adapter.notifyDataSetChanged();
                             }else
                                 {
@@ -115,7 +115,7 @@ public class Fragment_Rent_Car extends Fragment{
                     }
 
                     @Override
-                    public void onFailure(Call<List<VehicleModel>> call, Throwable t) {
+                    public void onFailure(Call<List<RentModel>> call, Throwable t) {
                         Log.e("Error",t.getMessage());
                         progBar.setVisibility(View.GONE);
                         Log.e("dsfsdfsd5","dfsdfsd");
@@ -124,10 +124,10 @@ public class Fragment_Rent_Car extends Fragment{
                 });
     }
 
-    public void setItem(VehicleModel vehicleModel)
+    public void setItem(RentModel rentModel)
     {
         Intent intent = new Intent(getActivity(), VehicleDetailsActivity.class);
-        intent.putExtra("data",vehicleModel);
+        intent.putExtra("data", rentModel);
         startActivity(intent);
     }
 }

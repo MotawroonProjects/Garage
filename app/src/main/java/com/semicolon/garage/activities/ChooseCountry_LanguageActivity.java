@@ -31,6 +31,7 @@ import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ChooseCountry_LanguageActivity extends AppCompatActivity {
@@ -50,15 +51,33 @@ public class ChooseCountry_LanguageActivity extends AppCompatActivity {
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
         lang = Paper.book().read("language");
+
         if (lang!=null)
         {
             super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,lang)));
+            if (lang.equals("ar"))
+            {
+                CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                        .setDefaultFontPath(Tags.ar_font)
+                        .setFontAttrId(R.attr.fontPath)
+                        .build());
+
+            }else if (lang.equals("en"))
+            {
+                CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                        .setDefaultFontPath(Tags.en_font)
+                        .setFontAttrId(R.attr.fontPath)
+                        .build());
+            }
 
         }else
-            {
-                super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,"ar")));
-
-            }
+        {
+            super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,"ar")));
+            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                    .setDefaultFontPath(Tags.ar_font)
+                    .setFontAttrId(R.attr.fontPath)
+                    .build());
+        }
 
     }
 
@@ -123,8 +142,6 @@ public class ChooseCountry_LanguageActivity extends AppCompatActivity {
                 if (country_nationality!=null)
                 {
                     preferences.setCountry_NaionalityData(ChooseCountry_LanguageActivity.this,country_nationality);
-
-                    Paper.book().write("language",language);
                     preferences.setIsLanguageSelected(ChooseCountry_LanguageActivity.this,true);
 
 
