@@ -1,8 +1,11 @@
 package com.semicolon.garage.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -17,6 +20,8 @@ import com.semicolon.garage.preferences.Preferences;
 import com.semicolon.garage.tags.Tags;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
+
+import java.util.List;
 
 import io.paperdb.Paper;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -124,5 +129,25 @@ public class Login_Register_Activity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
+        for (Fragment fragment:fragmentList)
+        {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
+        for (Fragment fragment:fragmentList)
+        {
+            fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 }

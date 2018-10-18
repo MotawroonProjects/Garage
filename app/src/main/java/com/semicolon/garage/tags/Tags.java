@@ -15,4 +15,8 @@ public class Tags {
     public static final String type_maintenance_trucks = "5";
     public static final String type_maintenance_motorcycles = "6";
 
+    public static final String update_full_name = "1";
+    public static final String update_phone = "2";
+    public static final String update_email= "3";
+    public static final String update_password = "4";
 }

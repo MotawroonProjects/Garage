@@ -7,6 +7,7 @@ public class UserModel implements Serializable {
     private String user_type;
     private String user_phone;
     private String user_email;
+    private String user_full_name;
     private String user_photo;
     private String user_token_id;
     private String user_google_lat;
@@ -19,6 +20,8 @@ public class UserModel implements Serializable {
     private String en_name;
     private String ar_nationality;
     private String en_nationality;
+    private String ar_city_title;
+    private String en_city_title;
     private int success_signup;
     private int success_login;
     private int success_update;
@@ -38,6 +41,10 @@ public class UserModel implements Serializable {
 
     public String getUser_email() {
         return user_email;
+    }
+
+    public String getUser_full_name() {
+        return user_full_name;
     }
 
     public String getUser_photo() {
@@ -102,5 +109,13 @@ public class UserModel implements Serializable {
 
     public int getSuccess_update_pass() {
         return success_update_pass;
+    }
+
+    public String getAr_city_title() {
+        return ar_city_title;
+    }
+
+    public String getEn_city_title() {
+        return en_city_title;
     }
 }

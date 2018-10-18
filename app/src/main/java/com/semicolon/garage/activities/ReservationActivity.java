@@ -84,6 +84,12 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
             Language.setLocality(this,"ar");
             image_back.setRotation(180f);
         }
+        image_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         tv_location = findViewById(R.id.tv_location);
         tv_from_date = findViewById(R.id.tv_from_date);

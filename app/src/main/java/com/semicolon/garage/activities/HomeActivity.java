@@ -1,10 +1,12 @@
 package com.semicolon.garage.activities;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -28,6 +30,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.semicolon.garage.R;
 import com.semicolon.garage.fragments.Fragment_Contactus;
 import com.semicolon.garage.fragments.Fragment_Home;
@@ -42,12 +48,16 @@ import com.semicolon.garage.models.UserModel;
 import com.semicolon.garage.preferences.Preferences;
 import com.semicolon.garage.remote.Api;
 import com.semicolon.garage.services.UpdateLocation;
+import com.semicolon.garage.share.Common;
 import com.semicolon.garage.singletone.UserSingleTone;
 import com.semicolon.garage.tags.Tags;
+import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.List;
 
 import io.paperdb.Paper;
 import retrofit2.Call;
@@ -170,12 +180,61 @@ public class HomeActivity extends AppCompatActivity
                 EventBus.getDefault().register(this);
             }
 
-            UpdateUI(userModel);
+            UpdateTokenId();
         }else
             {
                 fl_not.setVisibility(View.INVISIBLE);
             }
 
+    }
+
+    private void UpdateTokenId() {
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (task.isSuccessful())
+                        {
+                            String token = task.getResult().getToken();
+
+                            Api.getService()
+                                    .updateTokenId(userModel.getUser_id(),token)
+                                    .enqueue(new Callback<ResponsModel>() {
+                                        @Override
+                                        public void onResponse(Call<ResponsModel> call, Response<ResponsModel> response) {
+                                            if (response.isSuccessful())
+                                            {
+                                                if (response.body().getSuccess_token_id()==1)
+                                                {
+                                                    Log.e("Token","Token updated successfully");
+                                                }else if (response.body().getSuccess_token_id()==0)
+                                                {
+                                                    Log.e("Token","Token updated Failed");
+
+                                                }
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<ResponsModel> call, Throwable t) {
+                                            Log.e("Error",t.getMessage());
+                                        }
+                                    });
+                        }
+                    }
+                });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        String session =preferences.getSession(this);
+        if (session.equals(Tags.session_login))
+        {
+            userModel = preferences.getUserData(this);
+            UpdateUI(userModel);
+        }
     }
 
     private boolean isGpsOpen()
@@ -194,9 +253,10 @@ public class HomeActivity extends AppCompatActivity
 
     private void UpdateUI(UserModel userModel) {
 
+        Log.e("usernaem",userModel.getUser_full_name()+"__");
         userSingleTone.setUserModel(userModel);
-        /*user_name.setText();
-        Picasso.with(this).load(Uri.parse(Tags.IMAGE_URL+"")).into(user_image);*/
+        user_name.setText(userModel.getUser_full_name());
+        Picasso.with(this).load(Uri.parse(Tags.IMAGE_URL+userModel.getUser_photo())).into(user_image);
         getUnreadNotificationCount();
 
     }
@@ -275,15 +335,42 @@ public class HomeActivity extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_home_container,Fragment_Home.getInstance()).commit();
                 break;
             case R.id.profile:
-                UpdateTitle(getString(R.string.profile));
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_home_container, Fragment_Profile.getInstance()).commit();
+                if (userModel!=null)
+                {
+                    UpdateTitle(getString(R.string.profile));
+
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_home_container, Fragment_Profile.getInstance(userModel)).commit();
+
+                }else
+                    {
+
+                        AlertDialog alertDialog = Common.CreateUserNotSignInAlertDialog(HomeActivity.this);
+                        alertDialog.show();
+                        navigationView.getMenu().getItem(1).setChecked(false);
+
+                        navigationView.getMenu().getItem(0).setChecked(true);
+
+                    }
 
                 break;
             case R.id.reservation:
-                UpdateTitle(getString(R.string.reservations));
+                if (userModel!=null)
+                {
+                    UpdateTitle(getString(R.string.reservations));
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_home_container, Fragment_Reservation.getInstance()).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_home_container, Fragment_Reservation.getInstance()).commit();
+
+                }else
+                {
+                    AlertDialog alertDialog = Common.CreateUserNotSignInAlertDialog(HomeActivity.this);
+                    alertDialog.show();
+                    navigationView.getMenu().getItem(2).setChecked(false);
+
+                    navigationView.getMenu().getItem(0).setChecked(true);
+
+                }
+
 
                 break;
             case R.id.contact:
@@ -313,6 +400,8 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void logout() {
+        final ProgressDialog outdialog = Common.createProgressDialog(this,getString(R.string.logging_out));
+        outdialog.show();
         Api.getService()
                 .logout(userModel.getUser_id())
                 .enqueue(new Callback<ResponsModel>() {
@@ -320,6 +409,7 @@ public class HomeActivity extends AppCompatActivity
                     public void onResponse(Call<ResponsModel> call, Response<ResponsModel> response) {
                         if (response.isSuccessful())
                         {
+                            outdialog.dismiss();
                             if (response.body().getSuccess_logout()==1)
                             {
                                 userModel = null;
@@ -332,6 +422,7 @@ public class HomeActivity extends AppCompatActivity
 
                     @Override
                     public void onFailure(Call<ResponsModel> call, Throwable t) {
+                        outdialog.dismiss();
                         Log.e("Error",t.getMessage());
                         Toast.makeText(HomeActivity.this, R.string.something, Toast.LENGTH_SHORT).show();
 
@@ -435,6 +526,11 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
+        for (Fragment fragment :fragmentList)
+        {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
         if (requestCode==gps_req)
         {
             if (resultCode==RESULT_OK)

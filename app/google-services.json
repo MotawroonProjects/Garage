@@ -1,0 +1,435 @@
+{
+  "project_info": {
+    "project_number": "320810774296",
+    "firebase_url": "https://semicolon-3dbe7.firebaseio.com",
+    "project_id": "semicolon-3dbe7",
+    "storage_bucket": "semicolon-3dbe7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320810774296:android:82ae1bd68e6d5a65",
+        "android_client_info": {
+          "package_name": "com.SemiColon.Hmt.elengaz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320810774296-61qdbj9hg633jhr4vjm5rcgl1fl3qnq6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.SemiColon.Hmt.elengaz",
+            "certificate_hash": "e2be4fe5659c33225c218414eb7054eebb75be27"
+          }
+        },
+        {
+          "client_id": "320810774296-ms01629fpulvo9s59e74sdpnk07kg8pv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.SemiColon.Hmt.elengaz",
+            "certificate_hash": "6616577a7e310a6aae058246a826c73910eff6d4"
+          }
+        },
+        {
+          "client_id": "320810774296-ehbklh60e3ipag1cko9gurbu2pbbpptu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq5mcB1sJkUNfkenfO9v0I79bqHnWlEoc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320810774296-ehbklh60e3ipag1cko9gurbu2pbbpptu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "320810774296-2cmivfm04kqejt1jts7iv2fa74qbvmfa.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.apptech.HalanApp"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320810774296:android:fcd31a5346a93945",
+        "android_client_info": {
+          "package_name": "com.semicolon.Halan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320810774296-0ca7ttfvcugjhjvk63ktevirdbr5j56p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.semicolon.Halan",
+            "certificate_hash": "6616577a7e310a6aae058246a826c73910eff6d4"
+          }
+        },
+        {
+          "client_id": "320810774296-ehbklh60e3ipag1cko9gurbu2pbbpptu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq5mcB1sJkUNfkenfO9v0I79bqHnWlEoc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320810774296-ehbklh60e3ipag1cko9gurbu2pbbpptu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "320810774296-2cmivfm04kqejt1jts7iv2fa74qbvmfa.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.apptech.HalanApp"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320810774296:android:6f8d90ec39bcd78f",
+        "android_client_info": {
+          "package_name": "com.semicolon.criuse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320810774296-5t0afr0nsdibjfb6nbrsvtgfvcul2c19.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.semicolon.criuse",
+            "certificate_hash": "6616577a7e310a6aae058246a826c73910eff6d4"
+          }
+        },
+        {
+          "client_id": "320810774296-ehbklh60e3ipag1cko9gurbu2pbbpptu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq5mcB1sJkUNfkenfO9v0I79bqHnWlEoc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320810774296-ehbklh60e3ipag1cko9gurbu2pbbpptu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "320810774296-2cmivfm04kqejt1jts7iv2fa74qbvmfa.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.apptech.HalanApp"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320810774296:android:f6e5e3ce119fe84a",
+        "android_client_info": {
+          "package_name": "com.semicolon.estigaba"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320810774296-u44gd2jgr14tf2k5cjhi6lk9fcju69qp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.semicolon.estigaba",
+            "certificate_hash": "6616577a7e310a6aae058246a826c73910eff6d4"
+          }
+        },
+        {
+          "client_id": "320810774296-ehbklh60e3ipag1cko9gurbu2pbbpptu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq5mcB1sJkUNfkenfO9v0I79bqHnWlEoc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320810774296-ehbklh60e3ipag1cko9gurbu2pbbpptu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "320810774296-2cmivfm04kqejt1jts7iv2fa74qbvmfa.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.apptech.HalanApp"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320810774296:android:82a1495358b77dbe",
+        "android_client_info": {
+          "package_name": "com.semicolon.garage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320810774296-mecn0lq00t1upoi8t2ee2n7u18f2bdgk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.semicolon.garage",
+            "certificate_hash": "6616577a7e310a6aae058246a826c73910eff6d4"
+          }
+        },
+        {
+          "client_id": "320810774296-ehbklh60e3ipag1cko9gurbu2pbbpptu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq5mcB1sJkUNfkenfO9v0I79bqHnWlEoc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320810774296-ehbklh60e3ipag1cko9gurbu2pbbpptu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "320810774296-2cmivfm04kqejt1jts7iv2fa74qbvmfa.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.apptech.HalanApp"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320810774296:android:ebeb682cf302b91e",
+        "android_client_info": {
+          "package_name": "com.semicolon.huna"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320810774296-clmkhuv21a11014r31jvvk6s3kngciuf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.semicolon.huna",
+            "certificate_hash": "f672740365c94f35443ed9999751cf89c4763cca"
+          }
+        },
+        {
+          "client_id": "320810774296-e64j279qot7pvlrfa6ni5r210889ie49.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.semicolon.huna",
+            "certificate_hash": "6616577a7e310a6aae058246a826c73910eff6d4"
+          }
+        },
+        {
+          "client_id": "320810774296-ehbklh60e3ipag1cko9gurbu2pbbpptu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq5mcB1sJkUNfkenfO9v0I79bqHnWlEoc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320810774296-ehbklh60e3ipag1cko9gurbu2pbbpptu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "320810774296-2cmivfm04kqejt1jts7iv2fa74qbvmfa.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.apptech.HalanApp"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320810774296:android:9a68f08a3427ad05",
+        "android_client_info": {
+          "package_name": "com.semicolon.rests"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320810774296-30jo3ekauhf03fnokb5c1rf8a5q4s2kf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.semicolon.rests",
+            "certificate_hash": "6616577a7e310a6aae058246a826c73910eff6d4"
+          }
+        },
+        {
+          "client_id": "320810774296-ehbklh60e3ipag1cko9gurbu2pbbpptu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq5mcB1sJkUNfkenfO9v0I79bqHnWlEoc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320810774296-ehbklh60e3ipag1cko9gurbu2pbbpptu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "320810774296-2cmivfm04kqejt1jts7iv2fa74qbvmfa.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.apptech.HalanApp"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320810774296:android:5a860a8db3d19a37",
+        "android_client_info": {
+          "package_name": "com.semicolon.tadlaly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320810774296-lmhganqh6d871foii1hg18f97rfpdst0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.semicolon.tadlaly",
+            "certificate_hash": "6616577a7e310a6aae058246a826c73910eff6d4"
+          }
+        },
+        {
+          "client_id": "320810774296-ehbklh60e3ipag1cko9gurbu2pbbpptu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq5mcB1sJkUNfkenfO9v0I79bqHnWlEoc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320810774296-ehbklh60e3ipag1cko9gurbu2pbbpptu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "320810774296-2cmivfm04kqejt1jts7iv2fa74qbvmfa.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.apptech.HalanApp"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

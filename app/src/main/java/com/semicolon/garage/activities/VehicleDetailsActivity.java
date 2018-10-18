@@ -1,5 +1,6 @@
 package com.semicolon.garage.activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -12,20 +13,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.semicolon.garage.R;
 import com.semicolon.garage.adapters.ImagesAdapter;
 import com.semicolon.garage.adapters.MyPagerAdapterImages;
 import com.semicolon.garage.fragments.Fragment_Images;
 import com.semicolon.garage.languageHelper.Language;
-import com.semicolon.garage.models.UserModel;
 import com.semicolon.garage.models.RentModel;
+import com.semicolon.garage.models.ResponsModel;
+import com.semicolon.garage.models.UserModel;
+import com.semicolon.garage.remote.Api;
+import com.semicolon.garage.share.Common;
 import com.semicolon.garage.singletone.UserSingleTone;
 import com.semicolon.garage.tags.Tags;
 
@@ -33,6 +37,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.paperdb.Paper;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -137,23 +144,52 @@ public class VehicleDetailsActivity extends AppCompatActivity {
         btn_reserve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(VehicleDetailsActivity.this,ReservationActivity.class);
-                intent.putExtra("data", rentModel);
-                startActivity(intent);
-               /* if (userModel==null)
+
+                if (userModel==null)
                 {
-                    CreateAlertDialog();
+                    dialog = Common.CreateUserNotSignInAlertDialog(VehicleDetailsActivity.this);
+                    dialog.show();
                 }else
                     {
-
-                    }*/
+                        Intent intent = new Intent(VehicleDetailsActivity.this,ReservationActivity.class);
+                        intent.putExtra("data", rentModel);
+                        startActivity(intent);
+                    }
             }
         });
 
         btn_rate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("rate",rateBar.getRating()+"_");
+
+                final ProgressDialog rateDialog = Common.createProgressDialog(VehicleDetailsActivity.this,getString(R.string.rating2));
+                rateDialog.show();
+                Api.getService()
+                        .sendEvaluation(rentModel.getId_car_maintenance(),rateBar.getRating())
+                        .enqueue(new Callback<ResponsModel>() {
+                            @Override
+                            public void onResponse(Call<ResponsModel> call, Response<ResponsModel> response) {
+                                if (response.isSuccessful())
+                                {
+                                    rateDialog.dismiss();
+                                    if (response.body().getSuccess_evaluation()==1)
+                                    {
+                                        Toast.makeText(VehicleDetailsActivity.this, R.string.eval_succ,Toast.LENGTH_LONG).show();
+                                    }else if (response.body().getSuccess_evaluation()==0)
+                                    {
+                                        Toast.makeText(VehicleDetailsActivity.this,R.string.something, Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponsModel> call, Throwable t) {
+                                Log.e("Error",t.getMessage());
+                                rateDialog.dismiss();
+
+                            }
+                        });
 
             }
         });
@@ -161,27 +197,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
     }
 
-    private void CreateAlertDialog()
-    {
-        dialog = new AlertDialog.Builder(this)
-                .setCancelable(true)
-                .create();
 
-        View view = LayoutInflater.from(this).inflate(R.layout.custom_dialog,null);
-        Button doneBtn = view.findViewById(R.id.doneBtn);
-
-        doneBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        dialog.getWindow().getAttributes().windowAnimations=R.style.dialog;
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setView(view);
-        dialog.show();
-    }
     private void getDataFromIntent() {
         Intent intent = getIntent();
         if (intent!=null)

@@ -16,6 +16,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <service android:name=".notifications.MyFireBaseMessagingInstanceId">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <service android:name=".services.UpdateLocation" />
 
         <activity android:name=".activities.SplashActivity">
@@ -48,8 +55,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".activities.MapsActivity"></activity>
+        <activity android:name=".activities.MapsActivity" />
+        <activity android:name=".activities.ForgetPasswordActivity"></activity>
     </application>
 
 </manifest>

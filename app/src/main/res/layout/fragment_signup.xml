@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
+<ScrollView xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true"
@@ -82,6 +83,7 @@
         android:textStyle="bold"
         android:textSize="13sp"
         android:text="@string/phone_number"
+        android:layout_marginTop="5dp"
         />
     <com.lamudi.phonefield.PhoneInputLayout
         android:id="@+id/edt_phone_check"
@@ -194,23 +196,56 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="5dp"
         />
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/sel_btn"
         android:layout_marginBottom="5dp"
         android:paddingRight="5dp"
         android:paddingLeft="5dp"
-        >
-        <Spinner
-            android:id="@+id/spinner_document"
-            android:layout_width="match_parent"
-            android:layout_height="42dp"
-            app:backgroundTint="@color/white"
-            >
+        android:orientation="horizontal"
 
-        </Spinner>
-    </FrameLayout>
+        >
+       <com.github.siyamed.shapeimageview.RoundedImageView
+           android:id="@+id/uploaded_image"
+           android:layout_width="85dp"
+           android:layout_height="85dp"
+           app:siBorderType="stroke"
+           app:siRadius="5dp"
+           app:siBorderColor="@color/gray1"
+           app:siBorderWidth="1dp"
+           android:src="@color/press_color"
+           />
+
+        <LinearLayout
+            android:id="@+id/ll_upload_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginStart="20dp"
+            tools:ignore="RtlCompat">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                android:layout_gravity="center_vertical"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:text="@string/upload_image"
+                android:clickable="false"
+                android:longClickable="false"
+                />
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="35dp"
+                android:src="@drawable/upload_icon"
+                android:padding="6dp"
+                android:clickable="false"
+                android:longClickable="false"
+                />
+        </LinearLayout>
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
@@ -232,7 +267,7 @@
         android:paddingLeft="5dp"
         >
         <Spinner
-            android:id="@+id/spinner_personal_ident"
+            android:id="@+id/spinner_city"
             android:layout_width="match_parent"
             android:layout_height="42dp"
             app:backgroundTint="@color/white"
