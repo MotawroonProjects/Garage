@@ -111,4 +111,22 @@
     <string name="newpass_req">كلمة المرور الجديدة مطلوبة</string>
     <string name="upd_succ">تم التعديل بنجاح</string>
     <string name="wrong_oldpass">كلمة المرور القديمة غير صحيحة</string>
+    <string name="choose_cities">إختر الدولة</string>
+    <string name="choose_nationality">إختر الجنسية</string>
+    <string name="updng_city">جار تعديل المدينة...</string>
+    <string name="updng_nationality">جار تعديل الجنسية...</string>
+    <string name="date_old">التاريخ قديم جدا</string>
+    <string name="book">حجز</string>
+    <string name="sel_sd">إختر تاريخ بداية الحجز</string>
+    <string name="enter_resr_add">ادخل عنوان الحجز</string>
+    <string name="sel_ed">إختر تاريخ نهاية الحجز</string>
+    <string name="transformation">التحويل</string>
+    <string name="transfer_amount">مبلغ التحويل</string>
+    <string name="transfer_photo">صورة التحويل</string>
+    <string name="per_den">تم رفض الإذن لاستخدام الصور</string>
+    <string name="date_notav">لا يمكنك الحجز.الوقت غير متاح</string>
+    <string name="amo_req">المبلغ مطلوب</string>
+    <string name="sel_trans_img">اختر صورة التحويل</string>
+    <string name="bokng">جار الحجز...</string>
+    <string name="bok_suc">تم الحجز بنجاح</string>
 </resources>

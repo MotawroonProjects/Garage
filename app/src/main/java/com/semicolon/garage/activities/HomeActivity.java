@@ -44,6 +44,7 @@ import com.semicolon.garage.fragments.Fragment_Terms_Condition;
 import com.semicolon.garage.languageHelper.Language;
 import com.semicolon.garage.models.LocationModel;
 import com.semicolon.garage.models.ResponsModel;
+import com.semicolon.garage.models.UnReadeModel;
 import com.semicolon.garage.models.UserModel;
 import com.semicolon.garage.preferences.Preferences;
 import com.semicolon.garage.remote.Api;
@@ -165,11 +166,11 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 UpdateTitle(getString(R.string.notification));
+                ReadNotification();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_home_container, Fragment_Notification.getInstance()).commit();
 
             }
         });
-        updateNotificationUi(20);
 
         if (session.equals(Tags.session_login))
         {
@@ -187,6 +188,8 @@ public class HomeActivity extends AppCompatActivity
             }
 
     }
+
+
 
     private void UpdateTokenId() {
         FirebaseInstanceId.getInstance().getInstanceId()
@@ -261,8 +264,46 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
-    private void getUnreadNotificationCount() {
+    private void ReadNotification() {
+        Api.getService()
+                .readNotification(userModel.getUser_id(),"1")
+                .enqueue(new Callback<ResponsModel>() {
+                    @Override
+                    public void onResponse(Call<ResponsModel> call, Response<ResponsModel> response) {
+                        if(response.isSuccessful())
+                        {
+                            if (response.body().getSuccess_read()==1)
+                            {
+                                updateNotificationUi(0);
+                            }
+                        }
+                    }
 
+                    @Override
+                    public void onFailure(Call<ResponsModel> call, Throwable t) {
+                        Log.e("Error",t.getMessage());
+                    }
+                });
+    }
+    private void getUnreadNotificationCount()
+    {
+
+        Api.getService()
+                .getUnReadNotification(userModel.getUser_id())
+                .enqueue(new Callback<UnReadeModel>() {
+                    @Override
+                    public void onResponse(Call<UnReadeModel> call, Response<UnReadeModel> response) {
+                        if (response.isSuccessful())
+                        {
+                            updateNotificationUi(response.body().getAlert_count());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UnReadeModel> call, Throwable t) {
+                        Log.e("Error",t.getMessage());
+                    }
+                });
     }
 
     private void updateNotificationUi(int count)

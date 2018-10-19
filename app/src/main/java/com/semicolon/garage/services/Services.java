@@ -8,6 +8,7 @@ import com.semicolon.garage.models.RentModel;
 import com.semicolon.garage.models.ResponsModel;
 import com.semicolon.garage.models.SocialContactModel;
 import com.semicolon.garage.models.Terms_Conditions;
+import com.semicolon.garage.models.UnReadeModel;
 import com.semicolon.garage.models.UserModel;
 
 import java.util.List;
@@ -129,5 +130,34 @@ public interface Services {
                                        @Part("country_personal_proof") RequestBody country_personal_proof,
                                        @Part MultipartBody.Part image
                                        );
+    @FormUrlEncoded
+    @POST("Api/Reservation")
+    Call<ResponsModel> canReserve(@Field("reservation_start_date") String reservation_start_date,
+                                  @Field("reservation_end_date") String reservation_end_date,
+                                  @Field("id_car_maintenance") String id_car_maintenance
+                                  );
+
+    @Multipart
+    @POST("Api/Reservation")
+    Call<ResponsModel> Reserve(@Part("id_car_maintenance") RequestBody id_car_maintenance,
+                               @Part("user_id") RequestBody user_id,
+                               @Part("reservation_cost") RequestBody reservation_cost,
+                               @Part("reservation_start_date") RequestBody reservation_start_date,
+                               @Part("reservation_end_date") RequestBody reservation_end_date,
+                               @Part("reservation_address") RequestBody reservation_address,
+                               @Part("reservation_google_lat") RequestBody reservation_google_lat,
+                               @Part("reservation_google_long") RequestBody reservation_google_long,
+                               @Part("transformation_person") RequestBody transformation_person,
+                               @Part("transformation_phone") RequestBody transformation_phone,
+                               @Part("transformation_amount") RequestBody transformation_amount,
+                               @Part MultipartBody.Part transformation_image
+                               );
+
+    @GET("Api/UnReadAlerts/{user_id}")
+    Call<UnReadeModel> getUnReadNotification(@Path("user_id") String user_id);
+
+    @FormUrlEncoded
+    @POST("Api/UnReadAlerts/{user_id}")
+    Call<ResponsModel> readNotification(@Path("user_id") String user_id,@Field("read_all") String read_all);
 
 }

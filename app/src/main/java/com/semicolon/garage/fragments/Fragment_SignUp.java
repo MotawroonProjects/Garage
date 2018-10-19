@@ -42,7 +42,6 @@ import com.semicolon.garage.remote.Api;
 import com.semicolon.garage.share.Common;
 import com.semicolon.garage.singletone.UserSingleTone;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -422,22 +421,14 @@ public class Fragment_SignUp extends Fragment{
         if (requestCode==img1_req&&resultCode== Activity.RESULT_OK && data!=null)
         {
             imageUri = data.getData();
-            try {
-                Bitmap bitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(imageUri));
-                image.setImageBitmap(bitmap);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            Bitmap bitmap = BitmapFactory.decodeFile(Common.getImagePath(getActivity(),imageUri));
+            image.setImageBitmap(bitmap);
         }
         else if (requestCode==img2_req&&resultCode== Activity.RESULT_OK && data!=null)
         {
             uploadedImageUri = data.getData();
-            try {
-                Bitmap bitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(uploadedImageUri));
-                uploaded_image.setImageBitmap(bitmap);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            Bitmap bitmap = BitmapFactory.decodeFile(Common.getImagePath(getActivity(),uploadedImageUri));
+            uploaded_image.setImageBitmap(bitmap);
         }
     }
     @Override

@@ -10,6 +10,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
@@ -29,6 +31,10 @@ import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.github.siyamed.shapeimageview.RoundedImageView;
 import com.lamudi.phonefield.PhoneInputLayout;
 import com.semicolon.garage.R;
+import com.semicolon.garage.adapters.CityDialogAdapter;
+import com.semicolon.garage.adapters.NationalityDialogAdapter;
+import com.semicolon.garage.models.CityModel;
+import com.semicolon.garage.models.Country_Nationality;
 import com.semicolon.garage.models.UserModel;
 import com.semicolon.garage.preferences.Preferences;
 import com.semicolon.garage.remote.Api;
@@ -36,6 +42,9 @@ import com.semicolon.garage.share.Common;
 import com.semicolon.garage.singletone.UserSingleTone;
 import com.semicolon.garage.tags.Tags;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.paperdb.Paper;
 import okhttp3.MultipartBody;
@@ -63,6 +72,11 @@ public class Fragment_Profile extends Fragment{
     private ProgressDialog progressDialog;
     private UserSingleTone userSingleTone;
     private Preferences preferences;
+    private AlertDialog cityDialog;
+    private AlertDialog country_NationalityDialog;
+
+    private List<Country_Nationality> country_nationalityList;
+    private List<CityModel> cityModelList;
 
 
     @Nullable
@@ -112,11 +126,14 @@ public class Fragment_Profile extends Fragment{
         return fragment;
     }
 
-    private void initView(View view) {
+    private void initView(View view)
+    {
         userSingleTone = UserSingleTone.getInstance();
         preferences = Preferences.getInstance();
         Paper.init(getActivity());
         lang = Paper.book().read("language");
+        country_nationalityList = new ArrayList<>();
+        cityModelList = new ArrayList<>();
         image = view.findViewById(R.id.image);
         image_doc = view.findViewById(R.id.image_doc);
         image_bg = view.findViewById(R.id.image_bg);
@@ -165,6 +182,7 @@ public class Fragment_Profile extends Fragment{
         cardView_update_phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 CreateAlertDialog_UpdateProfile(Tags.update_phone);
             }
         });
@@ -175,9 +193,84 @@ public class Fragment_Profile extends Fragment{
                 CreateAlertDialog_UpdateProfile(Tags.update_password);
             }
         });
+
+        cardView_update_city.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardView_update_city.setEnabled(false);
+                if (cityModelList.size()>0)
+                {
+                    createCityDialog(cityModelList);
+                }else
+                    {
+                        getCities();
+                    }
+            }
+        });
+
+        cardView_update_nationality.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardView_update_nationality.setEnabled(false);
+
+                if (country_nationalityList.size()>0)
+                {
+                    createNationalityDialog(country_nationalityList);
+                }else
+                    {
+                        getNationality();
+                    }
+            }
+        });
     }
 
 
+    private void createCityDialog(List<CityModel> cityModelList)
+    {
+        cityDialog = new AlertDialog.Builder(getActivity())
+                .setCancelable(true)
+                .create();
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.city_dialog,null);
+        TextView tv_title = view.findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.choose_cities));
+        RecyclerView recView  = view.findViewById(R.id.recView);
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
+        RecyclerView.Adapter adapter = new CityDialogAdapter(getActivity(),cityModelList,lang,this);
+        recView.setLayoutManager(manager);
+        recView.setAdapter(adapter);
+
+        cityDialog.getWindow().getAttributes().windowAnimations = R.style.dialog;
+        cityDialog.setView(view);
+        cityDialog.show();
+        cardView_update_city.setEnabled(true);
+
+
+
+    }
+
+    private void createNationalityDialog(List<Country_Nationality> country_nationalityList)
+    {
+        country_NationalityDialog = new AlertDialog.Builder(getActivity())
+                .setCancelable(true)
+                .create();
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.city_dialog,null);
+        TextView tv_title  = view.findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.ch_nationality));
+        RecyclerView recView  = view.findViewById(R.id.recView);
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity());
+        RecyclerView.Adapter adapter = new NationalityDialogAdapter(getActivity(),country_nationalityList,lang,this);
+        recView.setLayoutManager(manager);
+        recView.setAdapter(adapter);
+
+        country_NationalityDialog.getWindow().getAttributes().windowAnimations = R.style.dialog;
+        country_NationalityDialog.setView(view);
+        country_NationalityDialog.show();
+        cardView_update_nationality.setEnabled(true);
+
+
+
+
+    }
     private void CreateAlertDialog_UpdateProfile(final String type)
     {
         updatedialog = new AlertDialog.Builder(getActivity())
@@ -377,6 +470,52 @@ public class Fragment_Profile extends Fragment{
 
 
 
+    }
+
+    private void getCities()
+    {
+        Api.getService()
+                .getCity()
+                .enqueue(new Callback<List<CityModel>>() {
+                    @Override
+                    public void onResponse(Call<List<CityModel>> call, Response<List<CityModel>> response) {
+                        if (response.isSuccessful())
+                        {
+                            cityModelList.clear();
+                            cityModelList.addAll(response.body());
+
+                            createCityDialog(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<CityModel>> call, Throwable t) {
+                        Log.e("Error",t.getMessage());
+                        Toast.makeText(getActivity(),R.string.something, Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+    private void getNationality()
+    {
+        Api.getService()
+                .getCountries_Nationality()
+                .enqueue(new Callback<List<Country_Nationality>>() {
+                    @Override
+                    public void onResponse(Call<List<Country_Nationality>> call, Response<List<Country_Nationality>> response) {
+                        if (response.isSuccessful())
+                        {
+                            country_nationalityList.clear();
+                            country_nationalityList.addAll(response.body());
+                            createNationalityDialog(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Country_Nationality>> call, Throwable t) {
+                        Log.e("Error",t.getMessage());
+                        Toast.makeText(getActivity(),R.string.something, Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
     private void SelectImage(int img_req)
     {
@@ -604,5 +743,102 @@ public class Fragment_Profile extends Fragment{
         this.preferences.create_update_userData(getActivity(),userModel);
         UpdateUi(userModel);
 
+    }
+
+    private void update_city(String newCity)
+    {
+
+        progressDialog = Common.createProgressDialog(getActivity(),getString(R.string.updng_city));
+        progressDialog.show();
+
+        RequestBody name_part = Common.getRequestBodyText(userModel.getUser_full_name());
+        RequestBody email_part = Common.getRequestBodyText(userModel.getUser_email());
+        RequestBody phone_part = Common.getRequestBodyText(userModel.getUser_phone());
+        RequestBody nationality_part = Common.getRequestBodyText(userModel.getId_country());
+        RequestBody city_part = Common.getRequestBodyText(newCity);
+
+
+        Api.getService().updateProfileData(userModel.getUser_id(),phone_part,nationality_part,email_part,name_part,city_part)
+                .enqueue(new Callback<UserModel>() {
+                    @Override
+                    public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+
+                        if (response.isSuccessful())
+                        {
+                            progressDialog.dismiss();
+                            if (response.body().getSuccess_update()==1)
+                            {
+                                UpdateUserData(response.body());
+                                Toast.makeText(getActivity(), R.string.upd_succ, Toast.LENGTH_SHORT).show();
+                            }
+                            else if (response.body().getSuccess_update()==2)
+                            {
+                                Toast.makeText(getActivity(), R.string.em_ph_exist, Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserModel> call, Throwable t) {
+                        progressDialog.dismiss();
+                        Log.e("Error",t.getMessage());
+                        Toast.makeText(getActivity(),R.string.something, Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void update_Nationality(String countryId)
+    {
+
+        progressDialog = Common.createProgressDialog(getActivity(),getString(R.string.updng_nationality));
+        progressDialog.show();
+        RequestBody name_part = Common.getRequestBodyText(userModel.getUser_full_name());
+        RequestBody email_part = Common.getRequestBodyText(userModel.getUser_email());
+        RequestBody phone_part = Common.getRequestBodyText(userModel.getUser_phone());
+        RequestBody nationality_part = Common.getRequestBodyText(countryId);
+        RequestBody city_part = Common.getRequestBodyText(userModel.getCountry_personal_proof());
+
+
+        Api.getService().updateProfileData(userModel.getUser_id(),phone_part,nationality_part,email_part,name_part,city_part)
+                .enqueue(new Callback<UserModel>() {
+                    @Override
+                    public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+
+                        if (response.isSuccessful())
+                        {
+                            progressDialog.dismiss();
+                            if (response.body().getSuccess_update()==1)
+                            {
+                                UpdateUserData(response.body());
+                                Toast.makeText(getActivity(), R.string.upd_succ, Toast.LENGTH_SHORT).show();
+                            }
+                            else if (response.body().getSuccess_update()==2)
+                            {
+                                Toast.makeText(getActivity(), R.string.em_ph_exist, Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserModel> call, Throwable t) {
+                        progressDialog.dismiss();
+                        Log.e("Error",t.getMessage());
+                        Toast.makeText(getActivity(),R.string.something, Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    public void setCityItem(CityModel cityItem)
+    {
+        cityDialog.dismiss();
+        update_city(cityItem.getId_city());
+    }
+
+    public void setNationalityItem(Country_Nationality nationalityItem)
+    {
+        country_NationalityDialog.dismiss();
+        update_Nationality(nationalityItem.getId_country());
     }
 }

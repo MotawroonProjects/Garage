@@ -59,7 +59,7 @@ public class Common {
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    private static String getImagePath(Context context,Uri uri)
+    public static String getImagePath(Context context,Uri uri)
     {
         int currentApiVersion;
         try

@@ -111,4 +111,22 @@
     <string name="newpass_req">New password is required</string>
     <string name="upd_succ">Updated successfully</string>
     <string name="wrong_oldpass">incorrect old password</string>
+    <string name="choose_cities">Choose city</string>
+    <string name="choose_nationality">Choose nationality</string>
+    <string name="updng_city">Updating city...</string>
+    <string name="updng_nationality">Updating nationality...</string>
+    <string name="date_old">Selected date is too old</string>
+    <string name="book">Booking</string>
+    <string name="sel_sd">Select start date</string>
+    <string name="enter_resr_add">Enter your reservation address</string>
+    <string name="sel_ed">Select end date</string>
+    <string name="transformation">Transformation</string>
+    <string name="transfer_amount">Transfer amount</string>
+    <string name="transfer_photo">transfer photo</string>
+    <string name="per_den">Permission denied to use photos</string>
+    <string name="date_notav">Cannot reserve ,data not available</string>
+    <string name="amo_req">Amount is required</string>
+    <string name="sel_trans_img">Select transfer image</string>
+    <string name="bokng">Booking...</string>
+    <string name="bok_suc">Booking successfully</string>
 </resources>
