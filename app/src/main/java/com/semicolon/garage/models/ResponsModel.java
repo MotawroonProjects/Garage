@@ -10,7 +10,10 @@ public class ResponsModel implements Serializable {
     private int success_evaluation;
     private int can_reservation;
     private int success_reservation;
+    private int success_update_reservation;
     private  int success_read;
+    private int success_delete_reservation;
+    private int success_rest;
     public int getSuccess_logout() {
         return success_logout;
     }
@@ -41,5 +44,17 @@ public class ResponsModel implements Serializable {
 
     public int getSuccess_read() {
         return success_read;
+    }
+
+    public int getSuccess_update_reservation() {
+        return success_update_reservation;
+    }
+
+    public int getSuccess_delete_reservation() {
+        return success_delete_reservation;
+    }
+
+    public int getSuccess_rest() {
+        return success_rest;
     }
 }

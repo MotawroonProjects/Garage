@@ -1,6 +1,5 @@
 package com.semicolon.garage.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,11 +21,8 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.semicolon.garage.R;
 import com.semicolon.garage.languageHelper.Language;
-import com.semicolon.garage.tags.Tags;
 
 import io.paperdb.Paper;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     private String lang;
@@ -36,43 +32,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private final float zoom = 15.0f;
     private FloatingActionButton fab;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        Paper.init(newBase);
-        lang = Paper.book().read("language");
 
-        if (lang!=null)
-        {
-            super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,lang)));
-            if (lang.equals("ar"))
-            {
-                CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath(Tags.ar_font)
-                        .setFontAttrId(R.attr.fontPath)
-                        .build());
-
-            }else if (lang.equals("en"))
-            {
-                CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath(Tags.en_font)
-                        .setFontAttrId(R.attr.fontPath)
-                        .build());
-            }
-
-        }else
-        {
-            super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,"ar")));
-            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                    .setDefaultFontPath(Tags.ar_font)
-                    .setFontAttrId(R.attr.fontPath)
-                    .build());
-        }
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         initMap();
+        Paper.init(this);
+        lang = Paper.book().read("language");
         fab = findViewById(R.id.fab);
         image_back = findViewById(R.id.image_back);
         if (lang!=null)

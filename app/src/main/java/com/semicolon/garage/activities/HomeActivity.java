@@ -1,6 +1,7 @@
 package com.semicolon.garage.activities;
 
 import android.Manifest;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -39,9 +40,8 @@ import com.semicolon.garage.fragments.Fragment_Contactus;
 import com.semicolon.garage.fragments.Fragment_Home;
 import com.semicolon.garage.fragments.Fragment_Notification;
 import com.semicolon.garage.fragments.Fragment_Profile;
-import com.semicolon.garage.fragments.Fragment_Reservation;
+import com.semicolon.garage.fragments.Fragment_Reservation_Container;
 import com.semicolon.garage.fragments.Fragment_Terms_Condition;
-import com.semicolon.garage.languageHelper.Language;
 import com.semicolon.garage.models.LocationModel;
 import com.semicolon.garage.models.ResponsModel;
 import com.semicolon.garage.models.UnReadeModel;
@@ -64,8 +64,6 @@ import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -86,47 +84,28 @@ public class HomeActivity extends AppCompatActivity
     private AlertDialog dialog;
     private Intent intentService;
 
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        Paper.init(newBase);
-        lang = Paper.book().read("language");
-
-        if (lang!=null)
-        {
-            super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,lang)));
-            if (lang.equals("ar"))
-            {
-                CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath(Tags.ar_font)
-                        .setFontAttrId(R.attr.fontPath)
-                        .build());
-
-            }else if (lang.equals("en"))
-            {
-                CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath(Tags.en_font)
-                        .setFontAttrId(R.attr.fontPath)
-                        .build());
-            }
-
-        }else
-        {
-            super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,"ar")));
-            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                    .setDefaultFontPath(Tags.ar_font)
-                    .setFontAttrId(R.attr.fontPath)
-                    .build());
-        }
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        Paper.init(this);
+        lang = Paper.book().read("language");
+
         initView();
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        String session = preferences.getSession(this);
+        if (session.equals(Tags.session_login))
+        {
+            getUnreadNotificationCount();
+        }
+
+    }
 
     private void initView() {
 
@@ -178,8 +157,10 @@ public class HomeActivity extends AppCompatActivity
             userModel = preferences.getUserData(this);
             if (!EventBus.getDefault().isRegistered(this))
             {
+                Log.e("registerd","registerd");
                 EventBus.getDefault().register(this);
             }
+            UpdateUI(userModel);
 
             UpdateTokenId();
         }else
@@ -229,16 +210,7 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        String session =preferences.getSession(this);
-        if (session.equals(Tags.session_login))
-        {
-            userModel = preferences.getUserData(this);
-            UpdateUI(userModel);
-        }
-    }
+
 
     private boolean isGpsOpen()
     {
@@ -254,7 +226,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
 
-    private void UpdateUI(UserModel userModel) {
+    public void UpdateUI(UserModel userModel) {
 
         Log.e("usernaem",userModel.getUser_full_name()+"__");
         userSingleTone.setUserModel(userModel);
@@ -336,6 +308,20 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void ListenForNotification(UnReadeModel unReadeModel)
+    {
+
+        Log.e("unread","unread");
+        getUnreadNotificationCount();
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_home_container);
+        if (fragment instanceof Fragment_Notification)
+        {
+            Fragment_Notification fragment_notification = (Fragment_Notification) fragment;
+            fragment_notification.getNotification();
+        }
+    }
+
 
     private void UpdateLocation(LocationModel locationModel)
     {
@@ -400,7 +386,7 @@ public class HomeActivity extends AppCompatActivity
                 {
                     UpdateTitle(getString(R.string.reservations));
 
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_home_container, Fragment_Reservation.getInstance()).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_home_container, Fragment_Reservation_Container.getInstance()).commit();
 
                 }else
                 {
@@ -456,6 +442,8 @@ public class HomeActivity extends AppCompatActivity
                                 userModel = null;
                                 userSingleTone.clear();
                                 preferences.create_update_session(HomeActivity.this, Tags.session_logout);
+                                NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                                manager.cancelAll();
                                 finish();
                             }
                         }
@@ -546,6 +534,11 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
+        for (Fragment fragment:fragmentList)
+        {
+            fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
         if (requestCode==per_req)
         {
             if (grantResults.length>0)
@@ -627,5 +620,6 @@ public class HomeActivity extends AppCompatActivity
         {
             EventBus.getDefault().unregister(this);
         }
+
     }
 }

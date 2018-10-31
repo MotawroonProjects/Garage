@@ -6,6 +6,21 @@ import java.io.Serializable;
 import java.util.List;
 
 public class RentModel implements Serializable {
+    private String id_reservation;
+    private String car_id_fk;
+    private String approved;
+    private String approved_date;
+    private String reservation_cost;
+    private String transformated;
+    private String reservation_start_date;
+    private String reservation_end_date;
+    private String can_edit;
+    private String can_cancel;
+    private String can_transformat;
+    private String reservation_num_days;
+    private String reservation_address;
+
+    //////////////////////////////////////
     private String id_car_maintenance;
     private String title;
     private String car_trademarks;
@@ -34,6 +49,7 @@ public class RentModel implements Serializable {
     private List<GalleryColor> gallary_color;
     @SerializedName("gallary_inside")
     private List<GalleryInside> gallary_inside;
+
 
 
 
@@ -168,5 +184,57 @@ public class RentModel implements Serializable {
         public String getPhoto_name() {
             return photo_name;
         }
+    }
+
+    public String getId_reservation() {
+        return id_reservation;
+    }
+
+    public String getCar_id_fk() {
+        return car_id_fk;
+    }
+
+    public String getApproved() {
+        return approved;
+    }
+
+    public String getApproved_date() {
+        return approved_date;
+    }
+
+    public String getReservation_cost() {
+        return reservation_cost;
+    }
+
+    public String getTransformated() {
+        return transformated;
+    }
+
+    public String getReservation_start_date() {
+        return reservation_start_date;
+    }
+
+    public String getReservation_end_date() {
+        return reservation_end_date;
+    }
+
+    public String getCan_edit() {
+        return can_edit;
+    }
+
+    public String getCan_cancel() {
+        return can_cancel;
+    }
+
+    public String getCan_transformat() {
+        return can_transformat;
+    }
+
+    public String getReservation_num_days() {
+        return reservation_num_days;
+    }
+
+    public String getReservation_address() {
+        return reservation_address;
     }
 }

@@ -65,6 +65,7 @@
                         android:textSize="11sp"
                         android:clickable="false"
                         android:longClickable="false"
+                        android:visibility="invisible"
                         />
                 </FrameLayout>
             </RelativeLayout>

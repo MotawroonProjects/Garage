@@ -2,7 +2,6 @@ package com.semicolon.garage.activities;
 
 import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -47,8 +46,6 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ReservationActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener,DatePickerDialog.OnDateSetListener{
 
@@ -76,40 +73,8 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
     private final int img_req = 2022;
     private int reserve_days;
     private String address="";
+    private String type="";
 
-
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        Paper.init(newBase);
-        lang = Paper.book().read("language");
-        if (lang!=null)
-        {
-            super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,lang)));
-            if (lang.equals("ar"))
-            {
-                CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath(Tags.ar_font)
-                        .setFontAttrId(R.attr.fontPath)
-                        .build());
-
-            }else if (lang.equals("en"))
-            {
-                CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath(Tags.en_font)
-                        .setFontAttrId(R.attr.fontPath)
-                        .build());
-            }
-
-        }else
-        {
-            super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,"ar")));
-            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                    .setDefaultFontPath(Tags.ar_font)
-                    .setFontAttrId(R.attr.fontPath)
-                    .build());
-        }
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,18 +87,24 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
 
 
     private void initView() {
+        Paper.init(this);
+        lang = Paper.book().read("language");
         root = findViewById(R.id.root);
         behavior = BottomSheetBehavior.from(root);
         image_back_sheet = findViewById(R.id.image_back_sheet);
 
         image_back = findViewById(R.id.image_back);
-        if (lang.equals("ar"))
+        if (lang!=null)
         {
-            Language.setLocality(this,"ar");
-            image_back.setRotation(180f);
-            image_back_sheet.setRotation(180f);
+            if (lang.equals("ar"))
+            {
+                Language.setLocality(this,"ar");
+                image_back.setRotation(180f);
+                image_back_sheet.setRotation(180f);
 
+            }
         }
+
         image_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -247,6 +218,24 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         if (intent!=null)
         {
             rentModel = (RentModel) intent.getSerializableExtra("data");
+            String address = intent.getStringExtra("address");
+            String sd = intent.getStringExtra("start_date");
+            String ed = intent.getStringExtra("end_date");
+            type = intent.getStringExtra("type");
+            updateUi(address,sd,ed);
+        }
+    }
+
+    private void updateUi(String address, String sd, String ed) {
+        edt_location.setText(address);
+        tv_from_date.setText(sd);
+        tv_to_date.setText(ed);
+        if (type.equals(Tags.add_reservation))
+        {
+            bookBtn.setText(getString(R.string.book));
+        }else if (type.equals(Tags.update_reservation))
+        {
+            bookBtn.setText(getString(R.string.update));
 
         }
     }
@@ -365,6 +354,8 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         RequestBody id_car_part = Common.getRequestBodyText(rentModel.getId_car_maintenance());
         RequestBody user_id_part = Common.getRequestBodyText(userModel.getUser_id());
         RequestBody cost_part = Common.getRequestBodyText(String.valueOf(cost));
+        RequestBody day_num_part = Common.getRequestBodyText(String.valueOf(reserve_days));
+
         RequestBody start_date_part = Common.getRequestBodyText(start_date);
         RequestBody end_date_part = Common.getRequestBodyText(end_date);
         RequestBody address_part = Common.getRequestBodyText(address);
@@ -378,7 +369,7 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         MultipartBody.Part image_part = Common.getMultiPart(this,uri,"transformation_image");
 
         Api.getService()
-                .Reserve(id_car_part,user_id_part,cost_part,start_date_part,end_date_part,address_part,lat_part,lng_part,name_part,phone_part,amount_part,image_part)
+                .Reserve(id_car_part,user_id_part,cost_part,day_num_part,start_date_part,end_date_part,address_part,lat_part,lng_part,name_part,phone_part,amount_part,image_part)
                 .enqueue(new Callback<ResponsModel>() {
                     @Override
                     public void onResponse(Call<ResponsModel> call, Response<ResponsModel> response) {
@@ -407,7 +398,7 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
                 });
     }
 
-    private void canReserve(String m_address, String start_date, String end_date) {
+    private void canReserve(String m_address, final String start_date, final String end_date) {
 
         final ProgressDialog dialog1 = Common.createProgressDialog(this,getString(R.string.wait));
         dialog1.show();
@@ -428,13 +419,21 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
                         if (response.isSuccessful())
                         {
                             dialog1.dismiss();
+                            Log.e("can_reserv",response.body().getCan_reservation()+"_");
                             if (response.body().getCan_reservation()==0)
                             {
                                 Toast.makeText(ReservationActivity.this, R.string.date_notav, Toast.LENGTH_SHORT).show();
 
                             }else if (response.body().getCan_reservation()==1)
                             {
-                                CheckPermission();
+                                if (type.equals(Tags.add_reservation))
+                                {
+                                    CheckPermission();
+
+                                }else if (type.equals(Tags.update_reservation))
+                                {
+                                    UpdateReservation(start_date,end_date,rentModel.getId_car_maintenance(),reserve_days,rentModel.getId_reservation());
+                                }
 
                             }
                         }
@@ -449,6 +448,40 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
                 });
 
 
+
+    }
+
+    private void UpdateReservation(String start_date, String end_date, String id_car_maintenance, int reserve_days, String id_reservation) {
+
+        final ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.upd_rese));
+        dialog.show();
+        Api.getService()
+                .UpdateReservation(id_reservation,start_date,end_date,id_car_maintenance,reserve_days)
+                .enqueue(new Callback<ResponsModel>() {
+                    @Override
+                    public void onResponse(Call<ResponsModel> call, Response<ResponsModel> response) {
+                        if (response.isSuccessful())
+                        {
+                            dialog.dismiss();
+                            if (response.body().getSuccess_update_reservation()==1)
+                            {
+                                Toast.makeText(ReservationActivity.this,R.string.upd_succ, Toast.LENGTH_SHORT).show();
+                                finish();
+                            }else
+                                {
+                                    Toast.makeText(ReservationActivity.this,R.string.something, Toast.LENGTH_SHORT).show();
+
+                                }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponsModel> call, Throwable t) {
+                        Log.e("Error",t.getMessage());
+                        dialog.dismiss();
+                        Toast.makeText(ReservationActivity.this,R.string.something, Toast.LENGTH_SHORT).show();
+                    }
+                });
 
     }
 

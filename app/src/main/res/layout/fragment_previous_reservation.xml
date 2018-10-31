@@ -8,7 +8,6 @@
         android:id="@+id/recView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
         >
 
     </android.support.v7.widget.RecyclerView>
@@ -19,8 +18,9 @@
         android:layout_gravity="center"
         android:indeterminateTint="@color/press_color"
         />
+
     <LinearLayout
-        android:id="@+id/ll_no_not"
+        android:id="@+id/ll_no_reserve"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -30,7 +30,7 @@
         <ImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/not"
+            android:src="@drawable/cart"
             android:layout_gravity="center_horizontal"
             />
         <TextView
@@ -39,9 +39,11 @@
             android:textColor="@color/black"
             android:textSize="17sp"
             android:textStyle="bold"
-            android:text="@string/no_not"
+            android:text="@string/no_reserve"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
+            android:gravity="center"
             />
     </LinearLayout>
+
 </FrameLayout>

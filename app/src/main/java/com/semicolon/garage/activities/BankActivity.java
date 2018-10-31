@@ -1,7 +1,7 @@
 package com.semicolon.garage.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -29,6 +29,8 @@ public class BankActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private LinearLayoutManager manager;
     private SmoothProgressBar smoothProgress;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

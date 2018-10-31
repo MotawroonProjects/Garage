@@ -17,8 +17,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.semicolon.garage.R;
-import com.semicolon.garage.adapters.NotificationAdapter;
-import com.semicolon.garage.models.NotificationModel;
+import com.semicolon.garage.adapters.PreviousReservationAdapter;
+import com.semicolon.garage.models.RentModel;
 import com.semicolon.garage.models.UserModel;
 import com.semicolon.garage.remote.Api;
 import com.semicolon.garage.singletone.UserSingleTone;
@@ -30,79 +30,75 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Fragment_Notification extends Fragment{
+public class Fragment_Previous_Reservation extends Fragment{
+
     private ProgressBar progBar;
     private RecyclerView recView;
-    private LinearLayout ll_no_not;
     private RecyclerView.LayoutManager manager;
     private RecyclerView.Adapter adapter;
-    private List<NotificationModel> notificationModelList;
+    private LinearLayout ll_no_reserve;
+    private List<RentModel> rentModelList;
     private UserSingleTone userSingleTone;
     private UserModel userModel;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_notification,container,false);
+        View view = inflater.inflate(R.layout.fragment_previous_reservation,container,false);
         initView(view);
         return view;
     }
 
-    public static Fragment_Notification getInstance()
+    public static Fragment_Previous_Reservation getInstance()
     {
-        return new Fragment_Notification();
+        return new Fragment_Previous_Reservation();
     }
 
     private void initView(View view) {
-        userSingleTone = UserSingleTone.getInstance();
-        userModel = userSingleTone.getUserModel();
-        notificationModelList = new ArrayList<>();
+        rentModelList = new ArrayList<>();
+        ll_no_reserve = view.findViewById(R.id.ll_no_reserve);
         progBar = view.findViewById(R.id.progBar);
-        ll_no_not = view.findViewById(R.id.ll_no_not);
         progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getActivity(),R.color.press_color), PorterDuff.Mode.SRC_IN);
         recView = view.findViewById(R.id.recView);
         manager = new LinearLayoutManager(getActivity());
         recView.setLayoutManager(manager);
-        adapter = new NotificationAdapter(getActivity(),notificationModelList);
+        adapter = new PreviousReservationAdapter(getActivity(),rentModelList);
         recView.setAdapter(adapter);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        getNotification();
-    }
-
-    public void getNotification() {
-
-        notificationModelList.clear();
+        userSingleTone = UserSingleTone.getInstance();
+        userModel = userSingleTone.getUserModel();
+        Log.e("user_id",userModel.getUser_id());
         Api.getService()
-                .getMyNotifications(userModel.getUser_id())
-                .enqueue(new Callback<List<NotificationModel>>() {
+                .getMyPreviousReservation(userModel.getUser_id())
+                .enqueue(new Callback<List<RentModel>>() {
                     @Override
-                    public void onResponse(Call<List<NotificationModel>> call, Response<List<NotificationModel>> response) {
+                    public void onResponse(Call<List<RentModel>> call, Response<List<RentModel>> response) {
                         if (response.isSuccessful())
                         {
+                            rentModelList.clear();
                             progBar.setVisibility(View.GONE);
-                            notificationModelList.addAll(response.body());
-
-                            if (notificationModelList.size()>0)
+                            rentModelList.addAll(response.body());
+                            if (rentModelList.size()>0)
                             {
-                                ll_no_not.setVisibility(View.GONE);
+                                ll_no_reserve.setVisibility(View.GONE);
                                 adapter.notifyDataSetChanged();
                             }else
-                                {
-                                    ll_no_not.setVisibility(View.VISIBLE);
-                                }
-                        }
+                            {
+                                ll_no_reserve.setVisibility(View.VISIBLE);
 
+                            }
+                        }
                     }
 
                     @Override
-                    public void onFailure(Call<List<NotificationModel>> call, Throwable t) {
+                    public void onFailure(Call<List<RentModel>> call, Throwable t) {
                         Log.e("Error",t.getMessage());
                         progBar.setVisibility(View.GONE);
-                        Toast.makeText(getActivity(),R.string.something, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(),R.string.something, Toast.LENGTH_LONG).show();
                     }
                 });
 

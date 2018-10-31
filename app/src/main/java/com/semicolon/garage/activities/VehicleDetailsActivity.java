@@ -1,7 +1,6 @@
 package com.semicolon.garage.activities;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
@@ -40,8 +39,6 @@ import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class VehicleDetailsActivity extends AppCompatActivity {
     private ImageView image_back,image_right,image_left;
@@ -60,38 +57,7 @@ public class VehicleDetailsActivity extends AppCompatActivity {
     private String lang;
     private AlertDialog dialog;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        Paper.init(newBase);
-        lang = Paper.book().read("language");
 
-        if (lang!=null)
-        {
-            super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,lang)));
-            if (lang.equals("ar"))
-            {
-                CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath(Tags.ar_font)
-                        .setFontAttrId(R.attr.fontPath)
-                        .build());
-
-            }else if (lang.equals("en"))
-            {
-                CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath(Tags.en_font)
-                        .setFontAttrId(R.attr.fontPath)
-                        .build());
-            }
-
-        }else
-        {
-            super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,"ar")));
-            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                    .setDefaultFontPath(Tags.ar_font)
-                    .setFontAttrId(R.attr.fontPath)
-                    .build());
-        }
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +69,8 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
 
     private void initView() {
+        Paper.init(this);
+        lang = Paper.book().read("language");
         galleryInsideList = new ArrayList<>();
         userSingleTone = UserSingleTone.getInstance();
         userModel = userSingleTone.getUserModel();
@@ -153,6 +121,11 @@ public class VehicleDetailsActivity extends AppCompatActivity {
                     {
                         Intent intent = new Intent(VehicleDetailsActivity.this,ReservationActivity.class);
                         intent.putExtra("data", rentModel);
+                        intent.putExtra("address","");
+                        intent.putExtra("start_date","");
+                        intent.putExtra("end_date","");
+                        intent.putExtra("type",Tags.add_reservation);
+
                         startActivity(intent);
                     }
             }

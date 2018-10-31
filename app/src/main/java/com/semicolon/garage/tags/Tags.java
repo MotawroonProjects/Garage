@@ -19,4 +19,13 @@ public class Tags {
     public static final String update_phone = "2";
     public static final String update_email= "3";
     public static final String update_password = "4";
+    public static final String add_reservation = "1";
+    public static final String update_reservation = "2";
+
+    public static final String can_edit = "1";
+    public static final String cannot_edit = "0";
+    public static final String can_cancel = "1";
+    public static final String cannot_cancel = "0";
+
+
 }

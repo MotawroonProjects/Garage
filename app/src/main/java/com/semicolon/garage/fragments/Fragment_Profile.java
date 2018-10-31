@@ -1,14 +1,18 @@
 package com.semicolon.garage.fragments;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +35,7 @@ import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.github.siyamed.shapeimageview.RoundedImageView;
 import com.lamudi.phonefield.PhoneInputLayout;
 import com.semicolon.garage.R;
+import com.semicolon.garage.activities.HomeActivity;
 import com.semicolon.garage.adapters.CityDialogAdapter;
 import com.semicolon.garage.adapters.NationalityDialogAdapter;
 import com.semicolon.garage.models.CityModel;
@@ -61,7 +66,7 @@ public class Fragment_Profile extends Fragment{
     private RoundedImageView image,image_doc;
     private KenBurnsView image_bg;
     private ImageView image_update_photo;
-    private TextView tv_name,tv_phone,tv_email,tv_country,tv_nationality;
+    private TextView tv_name,tv_phone,tv_email, tv_city,tv_nationality;
     private LinearLayout ll_update_name,ll_update_image_doc;
     private CardView cardView_update_phone,cardView_update_email,cardView_update_password,cardView_update_city,cardView_update_nationality;
     private final  int img1_req_profile=12,img2_req_doc=13;
@@ -74,9 +79,12 @@ public class Fragment_Profile extends Fragment{
     private Preferences preferences;
     private AlertDialog cityDialog;
     private AlertDialog country_NationalityDialog;
-
     private List<Country_Nationality> country_nationalityList;
     private List<CityModel> cityModelList;
+    private HomeActivity homeActivity;
+    private final String read_per = Manifest.permission.READ_EXTERNAL_STORAGE;
+    private final int read_req = 102,read_req_2=103;
+
 
 
     @Nullable
@@ -94,29 +102,6 @@ public class Fragment_Profile extends Fragment{
         return view;
     }
 
-    private void UpdateUi(UserModel userModel) {
-        Picasso.with(getActivity()).load(Uri.parse(Tags.IMAGE_URL+userModel.getUser_photo())).into(image);
-        Picasso.with(getActivity()).load(Uri.parse(Tags.IMAGE_URL+userModel.getUser_photo())).into(image_bg);
-        Picasso.with(getActivity()).load(Uri.parse(Tags.IMAGE_URL+userModel.getDocument_type_definition())).into(image_doc);
-
-        tv_name.setText(userModel.getUser_full_name());
-        tv_email.setText(userModel.getUser_email());
-        tv_phone.setText(userModel.getUser_phone());
-
-        if (lang.equals("ar"))
-        {
-            tv_country.setText(userModel.getAr_name());
-            tv_nationality.setText(userModel.getAr_nationality());
-        }else if (lang.equals("en"))
-        {
-            tv_country.setText(userModel.getEn_name());
-            tv_nationality.setText(userModel.getEn_nationality());
-
-        }
-
-
-    }
-
     public static Fragment_Profile getInstance(UserModel userModel)
     {
         Bundle bundle = new Bundle();
@@ -128,6 +113,7 @@ public class Fragment_Profile extends Fragment{
 
     private void initView(View view)
     {
+        homeActivity = (HomeActivity) getActivity();
         userSingleTone = UserSingleTone.getInstance();
         preferences = Preferences.getInstance();
         Paper.init(getActivity());
@@ -141,7 +127,7 @@ public class Fragment_Profile extends Fragment{
         tv_name = view.findViewById(R.id.tv_name);
         tv_phone = view.findViewById(R.id.tv_phone);
         tv_email = view.findViewById(R.id.tv_email);
-        tv_country = view.findViewById(R.id.tv_country);
+        tv_city = view.findViewById(R.id.tv_city);
         tv_nationality = view.findViewById(R.id.tv_nationality);
         ll_update_name = view.findViewById(R.id.ll_update_name);
         ll_update_image_doc = view.findViewById(R.id.ll_update_image_doc);
@@ -155,14 +141,16 @@ public class Fragment_Profile extends Fragment{
         image_update_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SelectImage(img1_req_profile);
+                CheckPermission(read_req);
+
             }
         });
 
         ll_update_image_doc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SelectImage(img2_req_doc);
+                CheckPermission(read_req_2);
+
             }
         });
 
@@ -202,9 +190,9 @@ public class Fragment_Profile extends Fragment{
                 {
                     createCityDialog(cityModelList);
                 }else
-                    {
-                        getCities();
-                    }
+                {
+                    getCities();
+                }
             }
         });
 
@@ -217,12 +205,61 @@ public class Fragment_Profile extends Fragment{
                 {
                     createNationalityDialog(country_nationalityList);
                 }else
-                    {
-                        getNationality();
-                    }
+                {
+                    getNationality();
+                }
             }
         });
     }
+
+    private void CheckPermission(int req)
+    {
+        if (ContextCompat.checkSelfPermission(getActivity(),read_per)!= PackageManager.PERMISSION_GRANTED)
+        {
+            String [] perm = {read_per};
+            ActivityCompat.requestPermissions(getActivity(),perm,req);
+        }else
+            {
+                if (req==read_req)
+                {
+                    SelectImage(img1_req_profile);
+
+                }else if (req==read_req_2)
+                {
+                    SelectImage(img2_req_doc);
+
+                }
+            }
+    }
+    private void UpdateUi(UserModel userModel) {
+        Log.e("name",userModel.getUser_full_name());
+        Log.e("phone",userModel.getUser_phone());
+        Log.e("email",userModel.getUser_email());
+        Log.e("country",userModel.getAr_name()+" _ "+userModel.getEn_name());
+        Log.e("nationality",userModel.getAr_nationality()+" _ "+userModel.getEn_nationality());
+
+        Picasso.with(getActivity()).load(Uri.parse(Tags.IMAGE_URL+userModel.getUser_photo())).into(image);
+        Picasso.with(getActivity()).load(Uri.parse(Tags.IMAGE_URL+userModel.getUser_photo())).into(image_bg);
+        Picasso.with(getActivity()).load(Uri.parse(Tags.IMAGE_URL+userModel.getDocument_type_definition())).into(image_doc);
+
+        tv_name.setText(userModel.getUser_full_name());
+        tv_email.setText(userModel.getUser_email());
+        tv_phone.setText(userModel.getUser_phone());
+
+        if (lang.equals("ar"))
+        {
+            tv_city.setText(userModel.getAr_city_title());
+            tv_nationality.setText(userModel.getAr_nationality());
+        }else if (lang.equals("en"))
+        {
+            tv_city.setText(userModel.getEn_city_title());
+            tv_nationality.setText(userModel.getEn_nationality());
+
+        }
+
+
+    }
+
 
 
     private void createCityDialog(List<CityModel> cityModelList)
@@ -290,7 +327,7 @@ public class Fragment_Profile extends Fragment{
             tv_title.setText(R.string.upd_name);
             edt_update.setInputType(InputType.TYPE_CLASS_TEXT);
             edt_newPassword.setVisibility(View.GONE);
-            edt_update.setHint(R.string.upd_name);
+            edt_update.setHint(R.string.name);
             if (userModel!=null)
             {
                 edt_update.setText(userModel.getUser_full_name());
@@ -302,7 +339,7 @@ public class Fragment_Profile extends Fragment{
             tv_title.setText(R.string.upd_phone);
             edt_update.setInputType(InputType.TYPE_CLASS_PHONE);
             edt_newPassword.setVisibility(View.GONE);
-            edt_update.setHint(R.string.upd_phone);
+            edt_update.setHint(R.string.phone_number);
             if (userModel!=null)
             {
                 edt_update.setText(userModel.getUser_phone());
@@ -314,7 +351,7 @@ public class Fragment_Profile extends Fragment{
             tv_title.setText(R.string.upd_email);
             edt_update.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
             edt_newPassword.setVisibility(View.GONE);
-            edt_update.setHint(R.string.upd_email);
+            edt_update.setHint(R.string.email);
             if (userModel!=null)
             {
                 edt_update.setText(userModel.getUser_email());
@@ -418,10 +455,11 @@ public class Fragment_Profile extends Fragment{
                 }else if (type.equals(Tags.update_password))
                 {
 
+                    Log.e("upd","password");
                     String m_oldPassword = edt_update.getText().toString();
                     String m_newPassword = edt_newPassword.getText().toString();
 
-                    if (!TextUtils.isEmpty(m_oldPassword)&&!TextUtils.isEmpty(m_newPassword)&&m_newPassword.length()>=5)
+                    if (!TextUtils.isEmpty(m_oldPassword)&&!TextUtils.isEmpty(m_newPassword))
                     {
                         Common.CloseKeyBoard(getActivity(),edt_update);
                         edt_update.setError(null);
@@ -542,6 +580,39 @@ public class Fragment_Profile extends Fragment{
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode==read_req)
+        {
+            if (grantResults.length>0)
+            {
+                if (grantResults[0]!=PackageManager.PERMISSION_GRANTED)
+                {
+                    Toast.makeText(getActivity(),R.string.per_den, Toast.LENGTH_SHORT).show();
+                }else
+                    {
+                        SelectImage(img1_req_profile);
+
+
+                    }
+            }
+        }else if (requestCode == read_req_2)
+        {
+            if (grantResults.length>0)
+            {
+                if (grantResults[0]!=PackageManager.PERMISSION_GRANTED)
+                {
+                    Toast.makeText(getActivity(),R.string.per_den, Toast.LENGTH_SHORT).show();
+                }else
+                    {
+                        SelectImage(img2_req_doc);
+
+                    }
+            }
+        }
+    }
     private void UpdateImage(Uri uri,String part_name) {
 
         updateImagedialog = Common.createProgressDialog(getActivity(),getString(R.string.upd_img));
@@ -589,6 +660,7 @@ public class Fragment_Profile extends Fragment{
 
     private void update_name(String newName)
     {
+        Log.e("name",newName);
 
         RequestBody name_part = Common.getRequestBodyText(newName);
         RequestBody email_part = Common.getRequestBodyText(userModel.getUser_email());
@@ -607,6 +679,7 @@ public class Fragment_Profile extends Fragment{
                             progressDialog.dismiss();
                             if (response.body().getSuccess_update()==1)
                             {
+                                updatedialog.dismiss();
                                 UpdateUserData(response.body());
                                 Toast.makeText(getActivity(), R.string.upd_succ, Toast.LENGTH_SHORT).show();
                             }
@@ -629,6 +702,7 @@ public class Fragment_Profile extends Fragment{
 
     private void update_phone(String newPhone)
     {
+        Log.e("phone",newPhone);
         RequestBody name_part = Common.getRequestBodyText(userModel.getUser_full_name());
         RequestBody email_part = Common.getRequestBodyText(userModel.getUser_email());
         RequestBody phone_part = Common.getRequestBodyText(newPhone);
@@ -645,6 +719,7 @@ public class Fragment_Profile extends Fragment{
                             progressDialog.dismiss();
                             if (response.body().getSuccess_update()==1)
                             {
+                                updatedialog.dismiss();
                                 UpdateUserData(response.body());
                                 Toast.makeText(getActivity(), R.string.upd_succ, Toast.LENGTH_SHORT).show();
                             }
@@ -666,6 +741,8 @@ public class Fragment_Profile extends Fragment{
     }
     private void update_email(String newEmail)
     {
+        Log.e("email",newEmail);
+
         RequestBody name_part = Common.getRequestBodyText(userModel.getUser_full_name());
         RequestBody email_part = Common.getRequestBodyText(newEmail);
         RequestBody phone_part = Common.getRequestBodyText(userModel.getUser_phone());
@@ -682,6 +759,8 @@ public class Fragment_Profile extends Fragment{
                             progressDialog.dismiss();
                             if (response.body().getSuccess_update()==1)
                             {
+                                updatedialog.dismiss();
+
                                 UpdateUserData(response.body());
                                 Toast.makeText(getActivity(), R.string.upd_succ, Toast.LENGTH_SHORT).show();
                             }
@@ -716,9 +795,12 @@ public class Fragment_Profile extends Fragment{
                             Log.e("dddd",response.body().getSuccess_update_pass()+"");
                             if (response.body().getSuccess_update_pass()==0)
                             {
+
                                 Toast.makeText(getActivity(), R.string.wrong_oldpass, Toast.LENGTH_SHORT).show();
                             }else if (response.body().getSuccess_update_pass()==1)
                             {
+                                updatedialog.dismiss();
+
                                 UpdateUserData(response.body());
                                 Toast.makeText(getActivity(), R.string.upd_succ, Toast.LENGTH_SHORT).show();
                             }
@@ -742,12 +824,13 @@ public class Fragment_Profile extends Fragment{
         this.userSingleTone.setUserModel(userModel);
         this.preferences.create_update_userData(getActivity(),userModel);
         UpdateUi(userModel);
+        homeActivity.UpdateUI(userModel);
 
     }
 
     private void update_city(String newCity)
     {
-
+        Log.e("city",newCity);
         progressDialog = Common.createProgressDialog(getActivity(),getString(R.string.updng_city));
         progressDialog.show();
 

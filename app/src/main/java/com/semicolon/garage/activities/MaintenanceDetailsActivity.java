@@ -1,6 +1,5 @@
 package com.semicolon.garage.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,8 +19,6 @@ import com.semicolon.garage.tags.Tags;
 import com.squareup.picasso.Picasso;
 
 import io.paperdb.Paper;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MaintenanceDetailsActivity extends AppCompatActivity {
     private String lang;
@@ -32,38 +29,7 @@ public class MaintenanceDetailsActivity extends AppCompatActivity {
     private Button btn_location;
     private CardView cardView_PhoneCall;
     private MaintenanceModel maintenanceModel;
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        Paper.init(newBase);
-        lang = Paper.book().read("language");
 
-        if (lang!=null)
-        {
-            super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,lang)));
-            if (lang.equals("ar"))
-            {
-                CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath(Tags.ar_font)
-                        .setFontAttrId(R.attr.fontPath)
-                        .build());
-
-            }else if (lang.equals("en"))
-            {
-                CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath(Tags.en_font)
-                        .setFontAttrId(R.attr.fontPath)
-                        .build());
-            }
-
-        }else
-        {
-            super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,"ar")));
-            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                    .setDefaultFontPath(Tags.ar_font)
-                    .setFontAttrId(R.attr.fontPath)
-                    .build());
-        }
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +41,8 @@ public class MaintenanceDetailsActivity extends AppCompatActivity {
 
 
     private void initView() {
+        Paper.init(this);
+        lang = Paper.book().read("language");
         image_back = findViewById(R.id.image_back);
         if (lang!=null)
         {

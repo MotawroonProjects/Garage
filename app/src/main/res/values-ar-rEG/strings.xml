@@ -129,4 +129,25 @@
     <string name="sel_trans_img">اختر صورة التحويل</string>
     <string name="bokng">جار الحجز...</string>
     <string name="bok_suc">تم الحجز بنجاح</string>
+    <string name="res_acc">تم الموافقة على الحجز</string>
+    <string name="res_can">تم إلغاء الحجز</string>
+    <string name="no_not">لا توجد إشعارات لعرضها</string>
+    <string name="duration">المــــــــدة</string>
+    <string name="dat">التـــاريخ</string>
+    <string name="car_address">العنوان</string>
+    <string name="total">الإجمالي</string>
+    <string name="delete">حــــــــذف</string>
+    <string name="no_reserve">لا توجد حجوزات لعرضها</string>
+    <string name="current">الحالية</string>
+    <string name="previous">السابقة</string>
+    <string name="upd_rese">جار تعديل الحجز...</string>
+    <string name="day">يوم</string>
+    <string name="sar">ريال</string>
+    <string name="from">من</string>
+    <string name="to">إلى</string>
+    <string name="cnt_edit">لايمكنك تعديل الحجز</string>
+    <string name="cnt_cancel">لايمكنك حذف الحجز</string>
+    <string name="deltng_resrv">جار حذف الحجز...</string>
+    <string name="ok">حسنا</string>
+
 </resources>

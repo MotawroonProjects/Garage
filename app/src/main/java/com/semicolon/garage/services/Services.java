@@ -1,9 +1,11 @@
 package com.semicolon.garage.services;
 
 import com.semicolon.garage.models.BankAccountModel;
+import com.semicolon.garage.models.CanReserveState;
 import com.semicolon.garage.models.CityModel;
 import com.semicolon.garage.models.Country_Nationality;
 import com.semicolon.garage.models.MaintenanceModel;
+import com.semicolon.garage.models.NotificationModel;
 import com.semicolon.garage.models.RentModel;
 import com.semicolon.garage.models.ResponsModel;
 import com.semicolon.garage.models.SocialContactModel;
@@ -131,17 +133,21 @@ public interface Services {
                                        @Part MultipartBody.Part image
                                        );
     @FormUrlEncoded
-    @POST("Api/Reservation")
+    @POST("Api/CheckResevation")
     Call<ResponsModel> canReserve(@Field("reservation_start_date") String reservation_start_date,
                                   @Field("reservation_end_date") String reservation_end_date,
                                   @Field("id_car_maintenance") String id_car_maintenance
                                   );
+
+    @GET("Api/StateReservation/{id_reservation}")
+    Call<CanReserveState> getMyReservation_CanEdit(@Path("id_reservation") String id_reservation);
 
     @Multipart
     @POST("Api/Reservation")
     Call<ResponsModel> Reserve(@Part("id_car_maintenance") RequestBody id_car_maintenance,
                                @Part("user_id") RequestBody user_id,
                                @Part("reservation_cost") RequestBody reservation_cost,
+                               @Part("reservation_num_days") RequestBody reservation_num_days,
                                @Part("reservation_start_date") RequestBody reservation_start_date,
                                @Part("reservation_end_date") RequestBody reservation_end_date,
                                @Part("reservation_address") RequestBody reservation_address,
@@ -153,11 +159,40 @@ public interface Services {
                                @Part MultipartBody.Part transformation_image
                                );
 
+    @FormUrlEncoded
+    @POST("Api/UpdateReservation/{id_reservation}")
+    Call<ResponsModel> UpdateReservation(@Path("id_reservation") String id_reservation,
+                                         @Field("new_reservation_start_date") String new_reservation_start_date,
+                                         @Field("new_reservation_end_date") String new_reservation_end_date,
+                                         @Field("id_car_maintenance") String id_car_maintenance,
+                                         @Field("reservation_num_days") int reservation_num_days
+
+                                         );
+
+    @FormUrlEncoded
+    @POST("Api/DeleteReservation/{id_reservation}")
+    Call<ResponsModel> deleteReservation(@Path("id_reservation") String id_reservation,
+                                         @Field("user_id") String user_id
+                                         );
+
     @GET("Api/UnReadAlerts/{user_id}")
     Call<UnReadeModel> getUnReadNotification(@Path("user_id") String user_id);
 
     @FormUrlEncoded
     @POST("Api/UnReadAlerts/{user_id}")
     Call<ResponsModel> readNotification(@Path("user_id") String user_id,@Field("read_all") String read_all);
+
+    @GET("Api/MyAlerts/{user_id}")
+    Call<List<NotificationModel>> getMyNotifications(@Path("user_id") String user_id);
+
+    @GET("Api/MyReservation/{user_id}")
+    Call<List<RentModel>> getMyCurrentReservation(@Path("user_id")String user_id);
+
+    @GET("Api/OldReservation/{user_id}")
+    Call<List<RentModel>> getMyPreviousReservation(@Path("user_id")String user_id);
+
+    @FormUrlEncoded
+    @POST("AppUser/RestMyPass")
+    Call<ResponsModel> resetPassword(@Field("user_email")String user_email);
 
 }

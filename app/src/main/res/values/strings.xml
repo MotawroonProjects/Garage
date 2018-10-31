@@ -129,4 +129,25 @@
     <string name="sel_trans_img">Select transfer image</string>
     <string name="bokng">Booking...</string>
     <string name="bok_suc">Booking successfully</string>
+    <string name="res_acc">Reservation accepted</string>
+    <string name="res_can">Reservation canceled</string>
+    <string name="no_not">There are no notifications to display</string>
+    <string name="duration">Duration</string>
+    <string name="dat">Date</string>
+    <string name="car_address">Address</string>
+    <string name="total">Total</string>
+    <string name="delete">Delete</string>
+    <string name="no_reserve">There are no reservations to display</string>
+    <string name="current">Current</string>
+    <string name="previous">Previous</string>
+    <string name="upd_rese">Updating reservation...</string>
+    <string name="day">Days</string>
+    <string name="sar">SAR</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="cnt_edit">Cannot edit your reservation</string>
+    <string name="cnt_cancel">Cannot delete your reservation</string>
+    <string name="deltng_resrv">Deleting reservation...</string>
+    <string name="ok">ok</string>
+
 </resources>

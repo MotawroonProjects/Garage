@@ -1,6 +1,5 @@
 package com.semicolon.garage.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,39 +9,25 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.semicolon.garage.R;
-import com.semicolon.garage.languageHelper.Language;
 import com.semicolon.garage.preferences.Preferences;
 import com.semicolon.garage.tags.Tags;
 
 import io.paperdb.Paper;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class SplashActivity extends AppCompatActivity {
     private String lang;
     private ImageView image;
     private Preferences preferences;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        Paper.init(newBase);
-        lang = Paper.book().read("language");
-        if (lang!=null)
-        {
-            super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,lang)));
 
-        }else
-        {
-            super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,"ar")));
-
-        }
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         preferences = Preferences.getInstance();
+        Paper.init(this);
+        lang = Paper.book().read("language");
         image = findViewById(R.id.image);
         Animation animation = AnimationUtils.loadAnimation(this,R.anim.fade);
         image.clearAnimation();

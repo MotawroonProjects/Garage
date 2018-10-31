@@ -1,6 +1,5 @@
 package com.semicolon.garage.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,17 +14,13 @@ import android.widget.LinearLayout;
 import com.semicolon.garage.R;
 import com.semicolon.garage.fragments.Fragment_SignIn;
 import com.semicolon.garage.fragments.Fragment_SignUp;
-import com.semicolon.garage.languageHelper.Language;
 import com.semicolon.garage.preferences.Preferences;
-import com.semicolon.garage.tags.Tags;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.util.List;
 
 import io.paperdb.Paper;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class Login_Register_Activity extends AppCompatActivity {
     private LinearLayout ll_bg;
@@ -33,39 +28,7 @@ public class Login_Register_Activity extends AppCompatActivity {
     private Preferences preferences;
     private String lang;
     private ExpandableLayout expand_layout;
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        Paper.init(newBase);
-        lang = Paper.book().read("language");
 
-        if (lang!=null)
-        {
-            super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,lang)));
-            if (lang.equals("ar"))
-            {
-                CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath(Tags.ar_font)
-                        .setFontAttrId(R.attr.fontPath)
-                        .build());
-
-            }else if (lang.equals("en"))
-            {
-                CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath(Tags.en_font)
-                        .setFontAttrId(R.attr.fontPath)
-                        .build());
-            }
-
-        }else
-        {
-            super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,"ar")));
-            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                    .setDefaultFontPath(Tags.ar_font)
-                    .setFontAttrId(R.attr.fontPath)
-                    .build());
-        }
-
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +37,8 @@ public class Login_Register_Activity extends AppCompatActivity {
     }
 
     private void initView() {
+        Paper.init(this);
+        lang = Paper.book().read("language");
         preferences = Preferences.getInstance();
         ll_bg = findViewById(R.id.ll_bg);
         btn_sign_in = findViewById(R.id.btn_sign_in);

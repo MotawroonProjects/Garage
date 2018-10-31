@@ -21,6 +21,8 @@ android {
         maven { url 'https://jitpack.io' }
 
     }
+
+
 }
 
 dependencies {
@@ -52,6 +54,7 @@ dependencies {
     implementation 'com.flaviofaria:kenburnsview:1.0.7'
     implementation 'io.paperdb:paperdb:2.6'
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
+    implementation 'me.anwarshahriar:calligrapher:1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

@@ -313,7 +313,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/tv_country"
+                    android:id="@+id/tv_city"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"

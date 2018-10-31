@@ -1,24 +1,29 @@
 package com.semicolon.garage.activities;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.semicolon.garage.R;
 import com.semicolon.garage.languageHelper.Language;
+import com.semicolon.garage.models.ResponsModel;
+import com.semicolon.garage.remote.Api;
 import com.semicolon.garage.share.Common;
-import com.semicolon.garage.tags.Tags;
 
 import io.paperdb.Paper;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ForgetPasswordActivity extends AppCompatActivity {
 
@@ -27,37 +32,8 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     private Button btn_reset_password;
     private String lang;
     private ProgressDialog dialog;
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        Paper.init(newBase);
-        lang = Paper.book().read("language");
-        if (lang!=null)
-        {
-            super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,lang)));
-            if (lang.equals("ar"))
-            {
-                CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath(Tags.ar_font)
-                        .setFontAttrId(R.attr.fontPath)
-                        .build());
+    private AlertDialog alertDialog;
 
-            }else if (lang.equals("en"))
-            {
-                CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath(Tags.en_font)
-                        .setFontAttrId(R.attr.fontPath)
-                        .build());
-            }
-
-        }else
-        {
-            super.attachBaseContext(CalligraphyContextWrapper.wrap(Language.onAttach(newBase,"ar")));
-            CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                    .setDefaultFontPath(Tags.ar_font)
-                    .setFontAttrId(R.attr.fontPath)
-                    .build());
-        }
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,13 +42,18 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     }
 
     private void initView() {
-
+        Paper.init(this);
+        lang = Paper.book().read("language");
         image_back = findViewById(R.id.image_back);
-        if (lang.equals("ar"))
+        if (lang!=null)
         {
-            Language.setLocality(this,"ar");
-            image_back.setRotation(180f);
+            if (lang.equals("ar"))
+            {
+                Language.setLocality(this,"ar");
+                image_back.setRotation(180f);
+            }
         }
+
         image_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,6 +72,28 @@ public class ForgetPasswordActivity extends AppCompatActivity {
 
     }
 
+    private void CreateAlertDialog()
+    {
+        alertDialog = new AlertDialog.Builder(this)
+                .setCancelable(false)
+                .create();
+
+        View view = LayoutInflater.from(this).inflate(R.layout.custom_alert_text_dialog,null);
+        Button btnOk = view.findViewById(R.id.openBtn);
+
+
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                finish();
+            }
+        });
+        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.setView(view);
+        alertDialog.show();
+    }
     private void CheckData() {
         String m_email = edt_email.getText().toString();
 
@@ -127,6 +130,31 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     private void ResetPassword(String m_email) {
         dialog = Common.createProgressDialog(this,getString(R.string.wait));
         dialog.show();
+        Api.getService()
+                .resetPassword(m_email)
+                .enqueue(new Callback<ResponsModel>() {
+                    @Override
+                    public void onResponse(Call<ResponsModel> call, Response<ResponsModel> response) {
+                        if (response.isSuccessful())
+                        {
+                            dialog.dismiss();
+                            if (response.body().getSuccess_rest()==1)
+                            {
+                                CreateAlertDialog();
+                            }else if (response.body().getSuccess_rest()==0)
+                            {
+                                Toast.makeText(ForgetPasswordActivity.this,R.string.something, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponsModel> call, Throwable t) {
+                        Log.e("Error",t.getMessage());
+                        Toast.makeText(ForgetPasswordActivity.this,R.string.something, Toast.LENGTH_SHORT).show();
+
+                    }
+                });
 
     }
 }
