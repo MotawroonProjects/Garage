@@ -308,10 +308,18 @@ public class Fragment_Contactus extends Fragment{
     {
         if (isWhatsApp_installed())
         {
-            Uri uri = Uri.parse("smsto:"+whatsapp_num);
-            Intent intent =new Intent(Intent.ACTION_SENDTO,uri);
-            intent.setPackage("com.whatsapp");
-            getActivity().startActivity(intent.createChooser(intent,"via whatsapp"));
+            String phone_number = whatsapp_num;
+            phone_number = phone_number.replace("+","");
+            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+            sendIntent.setType("text/plain");
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "السلام عليكم");
+            sendIntent.putExtra("jid", phone_number + "@s.whatsapp.net"); //phone number without "+" prefix
+            sendIntent.setPackage("com.whatsapp");
+            if (sendIntent.resolveActivity(getActivity().getPackageManager()) == null) {
+                Toast.makeText(getActivity(), "Error/n" + "", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            startActivity(sendIntent);
         }else
         {
             Toast.makeText(getActivity(), R.string.pls_install_wapp, Toast.LENGTH_SHORT).show();
