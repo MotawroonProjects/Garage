@@ -1,5 +1,6 @@
 package com.semicolon.garage.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ import com.semicolon.garage.models.MaintenanceModel;
 import com.semicolon.garage.tags.Tags;
 import com.squareup.picasso.Picasso;
 
+import java.util.Locale;
+
 import io.paperdb.Paper;
 
 public class MaintenanceDetailsActivity extends AppCompatActivity {
@@ -30,6 +33,11 @@ public class MaintenanceDetailsActivity extends AppCompatActivity {
     private CardView cardView_PhoneCall;
     private MaintenanceModel maintenanceModel;
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        Paper.init(newBase);
+        super.attachBaseContext(Language.onAttach(newBase,Paper.book().read("language", Locale.getDefault().getLanguage())));
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -42,6 +42,7 @@ import com.semicolon.garage.fragments.Fragment_Notification;
 import com.semicolon.garage.fragments.Fragment_Profile;
 import com.semicolon.garage.fragments.Fragment_Reservation_Container;
 import com.semicolon.garage.fragments.Fragment_Terms_Condition;
+import com.semicolon.garage.languageHelper.Language;
 import com.semicolon.garage.models.LocationModel;
 import com.semicolon.garage.models.ResponsModel;
 import com.semicolon.garage.models.UnReadeModel;
@@ -59,6 +60,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
+import java.util.Locale;
 
 import io.paperdb.Paper;
 import retrofit2.Call;
@@ -84,6 +86,11 @@ public class HomeActivity extends AppCompatActivity
     private AlertDialog dialog;
     private Intent intentService;
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        Paper.init(newBase);
+        super.attachBaseContext(Language.onAttach(newBase,Paper.book().read("language", Locale.getDefault().getLanguage())));
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,5 +1,6 @@
 package com.semicolon.garage.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,8 +10,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.semicolon.garage.R;
+import com.semicolon.garage.languageHelper.Language;
 import com.semicolon.garage.preferences.Preferences;
 import com.semicolon.garage.tags.Tags;
+
+import java.util.Locale;
 
 import io.paperdb.Paper;
 
@@ -20,6 +24,11 @@ public class SplashActivity extends AppCompatActivity {
     private Preferences preferences;
 
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        Paper.init(newBase);
+        super.attachBaseContext(Language.onAttach(newBase,Paper.book().read("language", Locale.getDefault().getLanguage())));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

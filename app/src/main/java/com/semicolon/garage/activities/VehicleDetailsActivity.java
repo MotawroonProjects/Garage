@@ -1,6 +1,7 @@
 package com.semicolon.garage.activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
@@ -34,6 +35,7 @@ import com.semicolon.garage.tags.Tags;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import io.paperdb.Paper;
 import retrofit2.Call;
@@ -68,6 +70,11 @@ public class VehicleDetailsActivity extends AppCompatActivity {
 
 
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        Paper.init(newBase);
+        super.attachBaseContext(Language.onAttach(newBase,Paper.book().read("language", Locale.getDefault().getLanguage())));
+    }
     private void initView() {
         Paper.init(this);
         lang = Paper.book().read("language");

@@ -1,5 +1,6 @@
 package com.semicolon.garage.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,13 +12,16 @@ import android.widget.Toast;
 
 import com.semicolon.garage.R;
 import com.semicolon.garage.adapters.BanksAdapter;
+import com.semicolon.garage.languageHelper.Language;
 import com.semicolon.garage.models.BankAccountModel;
 import com.semicolon.garage.remote.Api;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
+import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,6 +33,12 @@ public class BankActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private LinearLayoutManager manager;
     private SmoothProgressBar smoothProgress;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        Paper.init(newBase);
+        super.attachBaseContext(Language.onAttach(newBase,Paper.book().read("language", Locale.getDefault().getLanguage())));
+    }
 
 
     @Override

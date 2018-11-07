@@ -1,5 +1,6 @@
 package com.semicolon.garage.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,6 +23,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.semicolon.garage.R;
 import com.semicolon.garage.languageHelper.Language;
 
+import java.util.Locale;
+
 import io.paperdb.Paper;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -33,6 +36,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private FloatingActionButton fab;
 
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        Paper.init(newBase);
+        super.attachBaseContext(Language.onAttach(newBase,Paper.book().read("language", Locale.getDefault().getLanguage())));
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

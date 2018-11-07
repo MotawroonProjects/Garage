@@ -1,5 +1,6 @@
 package com.semicolon.garage.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,11 +15,13 @@ import android.widget.LinearLayout;
 import com.semicolon.garage.R;
 import com.semicolon.garage.fragments.Fragment_SignIn;
 import com.semicolon.garage.fragments.Fragment_SignUp;
+import com.semicolon.garage.languageHelper.Language;
 import com.semicolon.garage.preferences.Preferences;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.util.List;
+import java.util.Locale;
 
 import io.paperdb.Paper;
 
@@ -30,11 +33,17 @@ public class Login_Register_Activity extends AppCompatActivity {
     private ExpandableLayout expand_layout;
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        Paper.init(newBase);
+        super.attachBaseContext(Language.onAttach(newBase,Paper.book().read("language", Locale.getDefault().getLanguage())));
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_register);
         initView();
     }
+
 
     private void initView() {
         Paper.init(this);

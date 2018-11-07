@@ -1,6 +1,7 @@
 package com.semicolon.garage.activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,8 @@ import com.semicolon.garage.models.ResponsModel;
 import com.semicolon.garage.remote.Api;
 import com.semicolon.garage.share.Common;
 
+import java.util.Locale;
+
 import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,6 +37,11 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     private ProgressDialog dialog;
     private AlertDialog alertDialog;
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        Paper.init(newBase);
+        super.attachBaseContext(Language.onAttach(newBase,Paper.book().read("language", Locale.getDefault().getLanguage())));
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
