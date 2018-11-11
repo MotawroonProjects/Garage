@@ -31,7 +31,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.siyamed.shapeimageview.RoundedImageView;
-import com.lamudi.phonefield.PhoneInputLayout;
 import com.semicolon.garage.R;
 import com.semicolon.garage.activities.HomeActivity;
 import com.semicolon.garage.models.CityModel;
@@ -56,7 +55,7 @@ import retrofit2.Response;
 public class Fragment_SignUp extends Fragment{
     private CircleImageView image;
     private EditText edt_name,edt_phone_number,edt_phone_code,edt_email,edt_password;
-    private PhoneInputLayout edt_phone_check;
+    //private PhoneInputLayout edt_phone_check;
     private RoundedImageView uploaded_image;
     private LinearLayout ll_upload_image;
     private Button btn_done;
@@ -105,7 +104,7 @@ public class Fragment_SignUp extends Fragment{
         edt_phone_code =view.findViewById(R.id.edt_phone_code);
         edt_email =view.findViewById(R.id.edt_email);
         edt_password =view.findViewById(R.id.edt_password);
-        edt_phone_check =view.findViewById(R.id.edt_phone_check);
+        //edt_phone_check =view.findViewById(R.id.edt_phone_check);
         uploaded_image =view.findViewById(R.id.uploaded_image);
         ll_upload_image =view.findViewById(R.id.ll_upload_image);
         btn_done =view.findViewById(R.id.btn_done);
@@ -228,7 +227,7 @@ public class Fragment_SignUp extends Fragment{
         String m_email = edt_email.getText().toString();
         String m_password = edt_password.getText().toString();
 
-        if (!TextUtils.isEmpty(m_phone))
+       /* if (!TextUtils.isEmpty(m_phone))
         {
             if (!m_phone.startsWith("+"))
             {
@@ -236,13 +235,12 @@ public class Fragment_SignUp extends Fragment{
             }
             edt_phone_check.setPhoneNumber(m_phone);
 
-        }
+        }*/
 
 
         if (imageUri!=null&&
                 !TextUtils.isEmpty(m_name) &&
                 !TextUtils.isEmpty(m_phone)&&
-                edt_phone_check.isValid()&&
                 !TextUtils.isEmpty(m_email)&&
                 Patterns.EMAIL_ADDRESS.matcher(m_email).matches()&&
                 !TextUtils.isEmpty(m_password)&&
@@ -270,10 +268,6 @@ public class Fragment_SignUp extends Fragment{
                 if (TextUtils.isEmpty(m_phone))
                 {
                     edt_phone_number.setError(getString(R.string.phone_req));
-                }else if (!edt_phone_check.isValid())
-                {
-                    edt_phone_number.setError(getString(R.string.inv_phone));
-
                 }
                 else
                 {
