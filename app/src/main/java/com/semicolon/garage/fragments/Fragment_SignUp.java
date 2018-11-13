@@ -241,6 +241,9 @@ public class Fragment_SignUp extends Fragment{
         if (imageUri!=null&&
                 !TextUtils.isEmpty(m_name) &&
                 !TextUtils.isEmpty(m_phone)&&
+                m_phone.length()>=6&&
+                m_phone.length()<=13&&
+                Patterns.PHONE.matcher(m_phone).matches()&&
                 !TextUtils.isEmpty(m_email)&&
                 Patterns.EMAIL_ADDRESS.matcher(m_email).matches()&&
                 !TextUtils.isEmpty(m_password)&&
